@@ -6,8 +6,8 @@
 export const STORAGE_KEYS = {
   CART: 'flitside_cart_items_v2',
   LEGACY_CART: 'atelier_cart_items_v1',
-  PRODUCTS: 'flitside_ecommerce_products_v2',
-  LEGACY_PRODUCTS: 'atelier_ecommerce_products_v1',
+  PRODUCTS: 'flitside_ecommerce_products_v4',
+  LEGACY_PRODUCTS: 'flitside_ecommerce_products_v3',
   ORDERS: 'flitside_ecommerce_orders_v2',
   LEGACY_ORDERS: 'atelier_ecommerce_orders_v1',
 } as const;

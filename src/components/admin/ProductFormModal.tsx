@@ -13,11 +13,11 @@ const CATEGORIES: ProductCategory[] = ['Camisetas', 'Pantalones', 'Chaquetas', '
 const AVAILABLE_SIZES: ProductSize[] = ['XS', 'S', 'M', 'L', 'XL', 'Única'];
 
 const DEFAULT_IMAGES: Record<ProductCategory, string> = {
-  Camisetas: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80',
-  Pantalones: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80',
-  Chaquetas: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
-  Calzado: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80',
-  Accesorios: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80',
+  Camisetas: '/images/prod-1.jpg',
+  Pantalones: '/images/prod-3.jpg',
+  Chaquetas: '/images/prod-4.jpg',
+  Calzado: '/images/prod-6.jpg',
+  Accesorios: '/images/prod-8.jpg',
 };
 
 export const ProductFormModal: React.FC<ProductFormModalProps> = ({

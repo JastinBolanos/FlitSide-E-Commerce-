@@ -20,6 +20,31 @@ export class LocalStorageProductRepository implements IProductRepository {
 
     if (!existing || existing.length === 0) {
       LocalStorageAdapter.setItem(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+    } else {
+      const initialMap = new Map(INITIAL_PRODUCTS.map((p) => [p.id, p]));
+      let hasChanges = false;
+
+      // Update imageUrl for any initial product that has outdated or external unsplash URL
+      const updated = existing.map((p) => {
+        const initial = initialMap.get(p.id);
+        if (initial && p.imageUrl !== initial.imageUrl) {
+          hasChanges = true;
+          return { ...p, imageUrl: initial.imageUrl };
+        }
+        return p;
+      });
+
+      // Merge any missing initial products
+      const existingIds = new Set(updated.map((p) => p.id));
+      const missing = INITIAL_PRODUCTS.filter((p) => !existingIds.has(p.id));
+      if (missing.length > 0) {
+        updated.push(...missing);
+        hasChanges = true;
+      }
+
+      if (hasChanges) {
+        LocalStorageAdapter.setItem(STORAGE_KEYS.PRODUCTS, updated);
+      }
     }
   }
 

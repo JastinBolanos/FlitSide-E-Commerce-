@@ -60,6 +60,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             src={product.imageUrl}
             alt={product.name}
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.includes('/images/prod-1.jpg')) {
+                target.src = '/images/prod-1.jpg';
+              }
+            }}
             className="w-full h-full object-cover object-center"
           />
           {product.stock <= 5 && product.stock > 0 && (

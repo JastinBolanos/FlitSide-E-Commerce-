@@ -34,6 +34,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           src={product.imageUrl}
           alt={product.name}
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (!target.src.includes('/images/prod-1.jpg')) {
+              target.src = '/images/prod-1.jpg';
+            }
+          }}
           className={`h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
             isOutOfStock ? 'grayscale opacity-60' : ''
           }`}
