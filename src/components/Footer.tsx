@@ -4,9 +4,17 @@ import { FlitsideLogo } from './FlitsideLogo';
 
 interface FooterProps {
   onSwitchView: (view: 'store' | 'admin') => void;
+  onSelectCatalogComplete?: () => void;
+  onSelectNewArrivals?: () => void;
+  onOpenSizeGuide?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSwitchView }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onSwitchView,
+  onSelectCatalogComplete,
+  onSelectNewArrivals,
+  onOpenSizeGuide,
+}) => {
   const [clickCount, setClickCount] = useState(0);
 
   // Discreet access for store administrator (3 clicks on copyright)
@@ -45,28 +53,59 @@ export const Footer: React.FC<FooterProps> = ({ onSwitchView }) => {
             </div>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation - Colecciones */}
           <div>
             <h4 className="font-semibold text-slate-900 uppercase tracking-wider text-[11px] mb-3">
               Colecciones
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2.5 text-xs">
               <li>
                 <button
+                  id="footer-nav-catalog-complete"
                   onClick={() => {
-                    onSwitchView('store');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (onSelectCatalogComplete) {
+                      onSelectCatalogComplete();
+                    } else {
+                      onSwitchView('store');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                   }}
-                  className="hover:text-blue-600 transition-colors cursor-pointer text-slate-600"
+                  className="hover:text-blue-600 transition-colors cursor-pointer text-slate-600 font-medium block text-left"
                 >
                   Catálogo Completo
                 </button>
               </li>
               <li>
-                <span className="text-slate-500">Nuevas Llegadas 2026</span>
+                <button
+                  id="footer-nav-new-arrivals"
+                  onClick={() => {
+                    if (onSelectNewArrivals) {
+                      onSelectNewArrivals();
+                    } else {
+                      onSwitchView('store');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  className="flex items-center gap-2 hover:text-blue-600 transition-colors cursor-pointer text-slate-600 font-medium text-left group"
+                >
+                  <span>Nuevas Llegadas 2026</span>
+                  <span className="text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    2026
+                  </span>
+                </button>
               </li>
               <li>
-                <span className="text-slate-500">Guía de Tallas & Cuidados</span>
+                <button
+                  id="footer-nav-size-guide"
+                  onClick={() => {
+                    if (onOpenSizeGuide) {
+                      onOpenSizeGuide();
+                    }
+                  }}
+                  className="hover:text-blue-600 transition-colors cursor-pointer text-slate-600 font-medium block text-left"
+                >
+                  Guía de Tallas & Cuidados
+                </button>
               </li>
             </ul>
           </div>

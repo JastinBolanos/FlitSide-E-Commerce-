@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { X, ShoppingBag, Check, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import { X, ShoppingBag, Check, ShieldCheck, Truck, RotateCcw, Ruler } from 'lucide-react';
 import { Product, ProductSize } from '../types';
 
 interface ProductDetailModalProps {
   product: Product | null;
   onClose: () => void;
   onAddToCart: (product: Product, size: ProductSize, color: string, quantity: number) => void;
+  onOpenSizeGuide?: () => void;
 }
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
   onClose,
   onAddToCart,
+  onOpenSizeGuide,
 }) => {
   if (!product) return null;
 
@@ -110,7 +112,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div>
               <div className="flex items-center justify-between text-xs font-medium text-slate-700 mb-2">
                 <span>Seleccionar Talla</span>
-                <span className="text-slate-400 font-normal">Talla seleccionada: {selectedSize}</span>
+                {onOpenSizeGuide ? (
+                  <button
+                    type="button"
+                    id="btn-detail-open-size-guide"
+                    onClick={onOpenSizeGuide}
+                    className="text-blue-600 hover:text-blue-800 text-[11px] font-semibold underline cursor-pointer flex items-center gap-1"
+                  >
+                    <Ruler className="w-3 h-3" />
+                    <span>Guía de tallas</span>
+                  </button>
+                ) : (
+                  <span className="text-slate-400 font-normal">Talla seleccionada: {selectedSize}</span>
+                )}
               </div>
               <div className="flex flex-wrap gap-2">
                 {product.sizes.map((size) => (

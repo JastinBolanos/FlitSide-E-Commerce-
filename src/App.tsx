@@ -7,6 +7,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { Footer } from './components/Footer';
+import { SizeCareGuideModal } from './components/SizeCareGuideModal';
 import { ToastContainer } from './components/Toast';
 import { Product, Order, OrderStatus, ProductSize } from './domain/models';
 import {
@@ -40,6 +41,8 @@ export default function App() {
   // Storefront Filtering UI State
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [onlyNewArrivals, setOnlyNewArrivals] = useState<boolean>(false);
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState<boolean>(false);
 
   // Modals & Drawers UI State
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -49,6 +52,27 @@ export default function App() {
   const [checkoutPromoCode, setCheckoutPromoCode] = useState('');
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
   const [focusOrderIdInAdmin, setFocusOrderIdInAdmin] = useState<string | null>(null);
+
+  // Navigation handlers for Collections row in Footer
+  const handleSelectCatalogComplete = () => {
+    setView('store');
+    setSelectedCategory('all');
+    setSearchQuery('');
+    setOnlyNewArrivals(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectNewArrivals = () => {
+    setView('store');
+    setSelectedCategory('all');
+    setSearchQuery('');
+    setOnlyNewArrivals(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenSizeGuide = () => {
+    setIsSizeGuideOpen(true);
+  };
 
   // Cart user actions with toast feedback
   const handleAddToCart = (
@@ -119,7 +143,9 @@ export default function App() {
         cartItemCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={(cat) => {
+          setSelectedCategory(cat);
+        }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         pendingOrdersCount={pendingOrdersCount}
@@ -132,11 +158,15 @@ export default function App() {
             products={products}
             selectedCategory={selectedCategory}
             searchQuery={searchQuery}
+            onlyNewArrivals={onlyNewArrivals}
+            onClearNewArrivals={() => setOnlyNewArrivals(false)}
+            onOpenSizeGuide={handleOpenSizeGuide}
             onQuickAdd={(p, s, c) => handleAddToCart(p, s, c, 1)}
             onOpenDetail={(p) => setDetailProduct(p)}
             onResetFilters={() => {
               setSelectedCategory('all');
               setSearchQuery('');
+              setOnlyNewArrivals(false);
             }}
           />
         ) : (
@@ -167,6 +197,13 @@ export default function App() {
         product={detailProduct}
         onClose={() => setDetailProduct(null)}
         onAddToCart={handleAddToCart}
+        onOpenSizeGuide={handleOpenSizeGuide}
+      />
+
+      {/* Size & Care Guide Modal */}
+      <SizeCareGuideModal
+        isOpen={isSizeGuideOpen}
+        onClose={() => setIsSizeGuideOpen(false)}
       />
 
       {/* Checkout Modal */}
@@ -189,7 +226,12 @@ export default function App() {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
       {/* Footer */}
-      <Footer onSwitchView={setView} />
+      <Footer
+        onSwitchView={setView}
+        onSelectCatalogComplete={handleSelectCatalogComplete}
+        onSelectNewArrivals={handleSelectNewArrivals}
+        onOpenSizeGuide={handleOpenSizeGuide}
+      />
     </div>
   );
 }

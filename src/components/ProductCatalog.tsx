@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Filter, ArrowUpDown, Check, Sparkles, RefreshCw } from 'lucide-react';
+import { Filter, ArrowUpDown, Check, Sparkles, RefreshCw, Ruler, X } from 'lucide-react';
 import { Product, ProductSize } from '../types';
 import { ProductCard } from './ProductCard';
 
@@ -10,6 +10,9 @@ interface ProductCatalogProps {
   onQuickAdd: (product: Product, size: ProductSize, color: string) => void;
   onOpenDetail: (product: Product) => void;
   onResetFilters: () => void;
+  onlyNewArrivals?: boolean;
+  onClearNewArrivals?: () => void;
+  onOpenSizeGuide?: () => void;
 }
 
 const SIZES: ProductSize[] = ['XS', 'S', 'M', 'L', 'XL'];
@@ -21,6 +24,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
   onQuickAdd,
   onOpenDetail,
   onResetFilters,
+  onlyNewArrivals = false,
+  onClearNewArrivals,
+  onOpenSizeGuide,
 }) => {
   const [selectedSize, setSelectedSize] = useState<string>('all');
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
@@ -31,6 +37,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
   const filteredProducts = useMemo(() => {
     return products
       .filter((product) => {
+        // New arrivals filter from footer or navigation
+        if (onlyNewArrivals && !product.featured) {
+          return false;
+        }
+
         // Category filter
         if (selectedCategory !== 'all' && product.category !== selectedCategory) {
           return false;
@@ -66,25 +77,57 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         if (!a.featured && b.featured) return 1;
         return 0;
       });
-  }, [products, selectedCategory, searchQuery, selectedSize, inStockOnly, sortBy]);
+  }, [products, selectedCategory, searchQuery, selectedSize, inStockOnly, sortBy, onlyNewArrivals]);
 
   const hasActiveFilters =
     selectedCategory !== 'all' ||
     searchQuery.trim() !== '' ||
     selectedSize !== 'all' ||
-    inStockOnly;
+    inStockOnly ||
+    onlyNewArrivals;
+
+  const handleResetAll = () => {
+    setSelectedSize('all');
+    setInStockOnly(false);
+    setSortBy('featured');
+    if (onClearNewArrivals) {
+      onClearNewArrivals();
+    }
+    onResetFilters();
+  };
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Visual Header / Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 gap-4">
         <div>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
-            {selectedCategory === 'all' ? 'Colección FlitSide' : selectedCategory}
-          </p>
-          <h1 className="text-2xl font-bold text-slate-900">
-            {selectedCategory === 'all' ? 'Catálogo FlitSide' : `Colección ${selectedCategory}`}
-          </h1>
+          {onlyNewArrivals ? (
+            <>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] uppercase tracking-widest text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                  Colección 2026
+                </span>
+                <span className="text-xs text-slate-400">•</span>
+                <span className="text-xs text-slate-500 font-medium">Novedades FlitSide</span>
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <span>Nuevas Llegadas 2026</span>
+                <Sparkles className="w-5 h-5 text-blue-600" />
+              </h1>
+              <p className="text-xs text-slate-500 mt-1">
+                Prendas contemporáneas de confección artesanal y tejidos nobles recién incorporadas a la temporada.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
+                {selectedCategory === 'all' ? 'Colección FlitSide' : selectedCategory}
+              </p>
+              <h1 className="text-2xl font-bold text-slate-900">
+                {selectedCategory === 'all' ? 'Catálogo FlitSide' : `Colección ${selectedCategory}`}
+              </h1>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -103,6 +146,26 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
           </button>
         </div>
       </div>
+
+      {/* New Arrivals Active Notification Banner */}
+      {onlyNewArrivals && (
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-900">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+            <span>
+              Filtrado por <strong>Nuevas Llegadas 2026</strong>. Explora las últimas tendencias en tejidos nobles.
+            </span>
+          </div>
+          <button
+            id="btn-banner-clear-new-arrivals"
+            onClick={onClearNewArrivals}
+            className="inline-flex items-center gap-1 font-semibold text-blue-700 hover:text-blue-950 underline self-start sm:self-auto cursor-pointer"
+          >
+            <span>Ver catálogo completo</span>
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* Filter & Sort Bar */}
       <div className={`mt-4 pt-2 pb-4 ${showFiltersMobile ? 'block' : 'hidden sm:block'}`}>
@@ -135,6 +198,19 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 {size}
               </button>
             ))}
+
+            {/* Quick Size Guide Trigger */}
+            {onOpenSizeGuide && (
+              <button
+                id="btn-filter-open-size-guide"
+                onClick={onOpenSizeGuide}
+                className="ml-1 flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
+                title="Consultar guía de tallas y cuidados"
+              >
+                <Ruler className="w-3.5 h-3.5 text-blue-600" />
+                <span>Guía de Tallas</span>
+              </button>
+            )}
           </div>
 
           {/* Right side: Stock checkbox + Sort */}
@@ -171,12 +247,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             {hasActiveFilters && (
               <button
                 id="btn-reset-filters"
-                onClick={() => {
-                  setSelectedSize('all');
-                  setInStockOnly(false);
-                  setSortBy('featured');
-                  onResetFilters();
-                }}
+                onClick={handleResetAll}
                 className="text-slate-500 hover:text-slate-900 flex items-center gap-1 font-medium transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3 h-3" />
@@ -210,13 +281,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
           </p>
           <button
             id="btn-clear-empty-filters"
-            onClick={() => {
-              setSelectedSize('all');
-              setInStockOnly(false);
-              setSortBy('featured');
-              onResetFilters();
-            }}
-            className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors"
+            onClick={handleResetAll}
+            className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors cursor-pointer"
           >
             Ver todo el catálogo
           </button>
