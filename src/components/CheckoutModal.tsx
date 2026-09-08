@@ -94,27 +94,43 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-slate-700" />
-            <h2 className="text-base font-semibold text-slate-900 tracking-wide uppercase">
-              Checkout
-            </h2>
+    <div
+      id="checkout-modal-backdrop"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-slate-950/70 backdrop-blur-xs transition-opacity animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        id="checkout-modal-container"
+        className="relative w-full max-w-2xl max-h-[92vh] sm:max-h-[88vh] bg-white rounded-2xl shadow-2xl border-2 border-slate-200 ring-1 ring-slate-900/10 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+      >
+        {/* Header - Fixed at top with clear borders */}
+        <div className="shrink-0 px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/90 backdrop-blur-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-blue-50 text-blue-600 rounded-lg border border-blue-100">
+              <Lock className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-900 tracking-wide uppercase">
+                Checkout
+              </h2>
+              <span className="text-[11px] text-slate-500 font-medium">
+                FlitSide Atelier • Encrypted 256-bit SSL
+              </span>
+            </div>
           </div>
           <button
             id="btn-close-checkout"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer border border-transparent hover:border-slate-200"
             aria-label="Close checkout"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overscroll-contain p-6 space-y-6">
           {/* Section 1: Customer Details */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
@@ -230,20 +246,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
               2. Payment Method
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 type="button"
                 id="payment-card"
                 onClick={() => setPaymentMethod('credit_card')}
-                className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-3.5 rounded-xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   paymentMethod === 'credit_card'
-                    ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100 ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <CreditCard className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Credit / Debit Card</span>
+                  <span className="text-xs font-bold block">Credit / Debit Card</span>
                   <span className={`text-[10px] ${paymentMethod === 'credit_card' ? 'text-blue-100' : 'text-slate-400'}`}>
                     Visa, Mastercard
                   </span>
@@ -254,15 +270,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 type="button"
                 id="payment-transfer"
                 onClick={() => setPaymentMethod('transfer')}
-                className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-3.5 rounded-xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   paymentMethod === 'transfer'
-                    ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100 ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <Landmark className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Bank Transfer</span>
+                  <span className="text-xs font-bold block">Bank Transfer</span>
                   <span className={`text-[10px] ${paymentMethod === 'transfer' ? 'text-blue-100' : 'text-slate-400'}`}>
                     Direct wire
                   </span>
@@ -273,15 +289,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 type="button"
                 id="payment-cod"
                 onClick={() => setPaymentMethod('cash_on_delivery')}
-                className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-3.5 rounded-xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   paymentMethod === 'cash_on_delivery'
-                    ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100 ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <Truck className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Cash on Delivery</span>
+                  <span className="text-xs font-bold block">Cash on Delivery</span>
                   <span className={`text-[10px] ${paymentMethod === 'cash_on_delivery' ? 'text-blue-100' : 'text-slate-400'}`}>
                     Pay on arrival
                   </span>
@@ -291,71 +307,80 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
             {/* Sub-card details */}
             {paymentMethod === 'credit_card' && (
-              <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-3 gap-2 text-xs">
+              <div className="mt-3.5 p-4 bg-slate-50 border-2 border-slate-200 rounded-xl grid grid-cols-3 gap-3 text-xs shadow-xs">
                 <div className="col-span-3">
-                  <label className="block text-[11px] text-slate-500 mb-1">Card Number</label>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">Card Number</label>
                   <input
                     type="text"
+                    placeholder="•••• •••• •••• 4242"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded font-mono text-xs"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg font-mono text-xs focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-xs"
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-[11px] text-slate-500 mb-1">Expiry</label>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">Expiry</label>
                   <input
                     type="text"
+                    placeholder="MM/YY"
                     value={cardExpiry}
                     onChange={(e) => setCardExpiry(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded font-mono text-xs"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg font-mono text-xs focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-xs"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-slate-500 mb-1">CVC</label>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">CVC</label>
                   <input
                     type="text"
+                    placeholder="123"
                     value={cardCvc}
                     onChange={(e) => setCardCvc(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded font-mono text-xs"
+                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg font-mono text-xs focus:outline-none focus:ring-1 focus:ring-slate-900 shadow-xs"
                   />
                 </div>
               </div>
             )}
 
             {paymentMethod === 'transfer' && (
-              <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
+              <div className="mt-3.5 p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-600 shadow-xs">
                 <p className="font-semibold text-slate-800">Official bank account details:</p>
-                <p className="font-mono mt-1 text-[11px]">IBAN: ES91 2100 0418 4502 0005 1324</p>
-                <p className="text-[11px] text-slate-500 mt-1">Please specify your customer name and order number as the payment reference.</p>
+                <p className="font-mono mt-1 text-[11px] text-slate-900 font-bold bg-white p-2 rounded border border-slate-200">
+                  IBAN: ES91 2100 0418 4502 0005 1324
+                </p>
+                <p className="text-[11px] text-slate-500 mt-2">
+                  Please specify your customer name and order reference as the payment description.
+                </p>
               </div>
             )}
 
             {paymentMethod === 'cash_on_delivery' && (
-              <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
-                <p className="text-[11px]">Pay conveniently with card or cash directly to the courier upon delivery.</p>
+              <div className="mt-3.5 p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-600 shadow-xs">
+                <p className="text-xs text-slate-700 font-medium">
+                  Pay conveniently with card or cash directly to the courier agent upon parcel delivery.
+                </p>
               </div>
             )}
           </div>
 
           {/* Section 3: Order Summary & Submit */}
-          <div className="pt-4 border-t border-slate-200 bg-slate-50/50 p-4 rounded-xl">
-            <div className="flex justify-between text-xs text-slate-600 mb-1">
+          <div className="pt-4 border-2 border-slate-200 bg-slate-50/80 p-5 rounded-xl shadow-xs">
+            <div className="flex justify-between text-xs text-slate-600 mb-1.5">
               <span>Items ({cartItems.reduce((acc, i) => acc + i.quantity, 0)})</span>
-              <span>{subtotal.toFixed(2)}€</span>
+              <span className="font-mono font-medium">{subtotal.toFixed(2)}€</span>
             </div>
             {discountAmount > 0 && (
-              <div className="flex justify-between text-xs text-emerald-700 font-medium mb-1">
+              <div className="flex justify-between text-xs text-emerald-700 font-semibold mb-1.5">
                 <span>Discount ({promoCode})</span>
-                <span>-{discountAmount.toFixed(2)}€</span>
+                <span className="font-mono">-{discountAmount.toFixed(2)}€</span>
               </div>
             )}
-            <div className="flex justify-between text-xs text-slate-600 mb-2">
+            <div className="flex justify-between text-xs text-slate-600 mb-2.5">
               <span>Shipping</span>
-              <span>{shipping === 0 ? 'Free' : `${shipping.toFixed(2)}€`}</span>
+              <span className="font-medium text-emerald-700">{shipping === 0 ? 'Free' : `${shipping.toFixed(2)}€`}</span>
             </div>
-            <div className="flex justify-between text-base font-bold text-slate-900 pt-2 border-t border-slate-200">
+            <div className="flex justify-between text-base font-bold text-slate-900 pt-3 border-t border-slate-200">
               <span>Total amount</span>
-              <span className="text-blue-600 text-lg">{total.toFixed(2)}€</span>
+              <span className="text-blue-600 text-xl font-bold font-mono">{total.toFixed(2)}€</span>
             </div>
 
             <button
