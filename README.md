@@ -2,6 +2,17 @@
 
 > Modern digital fashion platform engineered to deliver an agile, aesthetic, and customer-focused shopping experience.
 
+![FlitSide Platform Interface](https://github.com/user-attachments/assets/b5d3507d-ca9c-4ccf-b4aa-8b24ce77d8d9)
+
+---    
+
+## 🎥 E-Commerce Platform Demo
+
+**🎬 Interactive Shopping Experience & UI Walkthrough**  
+A detailed walkthrough of the user interface, showcasing the fluid motion transitions, intuitive catalog browsing, and the seamless checkout flow designed for high-conversion modern e-commerce.
+
+https://github.com/user-attachments/assets/b0840ec9-6de2-4755-933a-d24995c92e4e
+
 ---
 
 ### 🌐 Overview
