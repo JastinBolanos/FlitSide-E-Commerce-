@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { ProductCatalog } from './components/ProductCatalog';
 import { CartDrawer } from './components/CartDrawer';
@@ -9,6 +10,7 @@ import { AdminDashboard } from './components/admin/AdminDashboard';
 import { Footer } from './components/Footer';
 import { SizeCareGuideModal } from './components/SizeCareGuideModal';
 import { ToastContainer } from './components/Toast';
+import { WelcomeScreen } from './components/WelcomeScreen';
 import { Product, Order, OrderStatus, ProductSize } from './domain/models';
 import {
   useCart,
@@ -37,6 +39,9 @@ export default function App() {
     clearCart,
   } = useCart();
   const { toasts, addToast, dismissToast } = useToast();
+
+  // Welcome Screen State
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
 
   // Storefront Filtering UI State
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -149,6 +154,7 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         pendingOrdersCount={pendingOrdersCount}
+        onOpenWelcome={() => setShowWelcome(true)}
       />
 
       {/* Main View: Storefront or Admin Dashboard */}
@@ -231,7 +237,15 @@ export default function App() {
         onSelectCatalogComplete={handleSelectCatalogComplete}
         onSelectNewArrivals={handleSelectNewArrivals}
         onOpenSizeGuide={handleOpenSizeGuide}
+        onOpenWelcome={() => setShowWelcome(true)}
       />
+
+      {/* Full-Screen Welcome Screen with Giant FLITSIDE and Ingresar Button */}
+      <AnimatePresence>
+        {showWelcome && (
+          <WelcomeScreen onEnter={() => setShowWelcome(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -7,6 +7,7 @@ interface FooterProps {
   onSelectCatalogComplete?: () => void;
   onSelectNewArrivals?: () => void;
   onOpenSizeGuide?: () => void;
+  onOpenWelcome?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -14,6 +15,7 @@ export const Footer: React.FC<FooterProps> = ({
   onSelectCatalogComplete,
   onSelectNewArrivals,
   onOpenSizeGuide,
+  onOpenWelcome,
 }) => {
   const [clickCount, setClickCount] = useState(0);
 
@@ -107,6 +109,17 @@ export const Footer: React.FC<FooterProps> = ({
                   Guía de Tallas & Cuidados
                 </button>
               </li>
+              {onOpenWelcome && (
+                <li>
+                  <button
+                    id="footer-nav-welcome-screen"
+                    onClick={onOpenWelcome}
+                    className="hover:text-blue-600 transition-colors cursor-pointer text-slate-600 font-medium block text-left"
+                  >
+                    Inicio
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 

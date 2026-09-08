@@ -13,6 +13,7 @@ interface NavbarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   pendingOrdersCount: number;
+  onOpenWelcome?: () => void;
 }
 
 const CATEGORIES: { label: string; value: string }[] = [
@@ -34,6 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   searchQuery,
   onSearchChange,
   pendingOrdersCount,
+  onOpenWelcome,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -112,6 +114,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Optional Inicio / Bienvenida link */}
+            {onOpenWelcome && currentView === 'store' && (
+              <button
+                id="btn-open-welcome"
+                onClick={onOpenWelcome}
+                className="hidden md:inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition-colors cursor-pointer"
+                title="Ir a Inicio"
+              >
+                Inicio
+              </button>
+            )}
+
             {/* If in admin view, button to return to store */}
             {currentView === 'admin' ? (
               <button
@@ -242,6 +256,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 );
               })}
+              {onOpenWelcome && (
+                <button
+                  id="mobile-nav-welcome-btn"
+                  onClick={() => {
+                    onOpenWelcome();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors border-t border-slate-100 mt-1 pt-2"
+                >
+                  <span>Inicio</span>
+                </button>
+              )}
             </div>
           )}
         </div>
