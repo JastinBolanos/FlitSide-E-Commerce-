@@ -60,17 +60,17 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                 FlitSide Atelier
               </span>
               <span className="text-xs text-slate-400">•</span>
-              <span className="text-xs text-slate-500 font-medium">Temporada 2026</span>
+              <span className="text-xs text-slate-500 font-medium">Season 2026</span>
             </div>
             <h2 className="text-lg font-bold text-slate-900 mt-0.5">
-              Guía de Tallas & Cuidados
+              Size & Care Guide
             </h2>
           </div>
           <button
             id="btn-close-size-care-modal"
             onClick={onClose}
             className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-            aria-label="Cerrar guía"
+            aria-label="Close guide"
           >
             <X className="w-5 h-5" />
           </button>
@@ -88,7 +88,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
             }`}
           >
             <Ruler className="w-4 h-4" />
-            <span>Tabla de Medidas & Tallas</span>
+            <span>Size & Measurement Chart</span>
           </button>
           <button
             id="tab-care-guide"
@@ -100,7 +100,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
             }`}
           >
             <Shirt className="w-4 h-4" />
-            <span>Cuidado de Tejidos Nobles</span>
+            <span>Fabric & Textile Care</span>
           </button>
         </div>
 
@@ -110,7 +110,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
             <div className="space-y-6">
               {/* Category sub-selector */}
               <div className="flex items-center gap-2 flex-wrap pb-1">
-                <span className="text-xs text-slate-500 font-medium mr-1">Prenda:</span>
+                <span className="text-xs text-slate-500 font-medium mr-1">Category:</span>
                 <button
                   id="btn-category-tops"
                   onClick={() => setSizeCategory('tops')}
@@ -120,7 +120,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  Camisetas & Sudaderas
+                  T-Shirts & Sweatshirts
                 </button>
                 <button
                   id="btn-category-pants"
@@ -131,7 +131,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  Pantalones & Jeans
+                  Pants & Trousers
                 </button>
                 <button
                   id="btn-category-jackets"
@@ -142,7 +142,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  Chaquetas & Abrigos
+                  Jackets & Coats
                 </button>
                 <button
                   id="btn-category-shoes"
@@ -153,7 +153,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  Calzado
+                  Footwear
                 </button>
               </div>
 
@@ -163,11 +163,11 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                   <table className="w-full text-xs text-left">
                     <thead className="bg-slate-50 text-slate-700 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200">
                       <tr>
-                        <th className="py-3 px-4">Talla</th>
-                        <th className="py-3 px-4">Contorno Pecho (cm)</th>
-                        <th className="py-3 px-4">Cintura (cm)</th>
-                        <th className="py-3 px-4">Cadera (cm)</th>
-                        <th className="py-3 px-4">Largo Prenda (cm)</th>
+                        <th className="py-3 px-4">Size</th>
+                        <th className="py-3 px-4">Chest (cm)</th>
+                        <th className="py-3 px-4">Waist (cm)</th>
+                        <th className="py-3 px-4">Hips (cm)</th>
+                        <th className="py-3 px-4">Garment Length (cm)</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-normal">
@@ -214,11 +214,11 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                   <table className="w-full text-xs text-left">
                     <thead className="bg-slate-50 text-slate-700 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200">
                       <tr>
-                        <th className="py-3 px-4">Talla FlitSide</th>
-                        <th className="py-3 px-4">Cintura (cm)</th>
-                        <th className="py-3 px-4">Cadera (cm)</th>
-                        <th className="py-3 px-4">Largo Entrepierna (cm)</th>
-                        <th className="py-3 px-4">Equiv. US</th>
+                        <th className="py-3 px-4">FlitSide Size</th>
+                        <th className="py-3 px-4">Waist (cm)</th>
+                        <th className="py-3 px-4">Hips (cm)</th>
+                        <th className="py-3 px-4">Inseam (cm)</th>
+                        <th className="py-3 px-4">US Equiv.</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-normal">
@@ -265,11 +265,11 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                   <table className="w-full text-xs text-left">
                     <thead className="bg-slate-50 text-slate-700 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200">
                       <tr>
-                        <th className="py-3 px-4">Talla</th>
-                        <th className="py-3 px-4">Pecho (cm)</th>
-                        <th className="py-3 px-4">Hombro a Hombro (cm)</th>
-                        <th className="py-3 px-4">Largo de Manga (cm)</th>
-                        <th className="py-3 px-4">Largo Total (cm)</th>
+                        <th className="py-3 px-4">Size</th>
+                        <th className="py-3 px-4">Chest (cm)</th>
+                        <th className="py-3 px-4">Shoulder Width (cm)</th>
+                        <th className="py-3 px-4">Sleeve Length (cm)</th>
+                        <th className="py-3 px-4">Total Length (cm)</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-normal">
@@ -316,10 +316,10 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                   <table className="w-full text-xs text-left">
                     <thead className="bg-slate-50 text-slate-700 uppercase tracking-wider text-[11px] font-bold border-b border-slate-200">
                       <tr>
-                        <th className="py-3 px-4">Talla EU</th>
-                        <th className="py-3 px-4">Longitud del Pie (cm)</th>
-                        <th className="py-3 px-4">Equivalente UK</th>
-                        <th className="py-3 px-4">Equivalente US</th>
+                        <th className="py-3 px-4">EU Size</th>
+                        <th className="py-3 px-4">Foot Length (cm)</th>
+                        <th className="py-3 px-4">UK Equiv.</th>
+                        <th className="py-3 px-4">US Equiv.</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-normal">
@@ -368,16 +368,16 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-2">
                 <div className="flex items-center gap-2 font-semibold text-slate-900">
                   <Info className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>¿Cómo tomar tus medidas con precisión?</span>
+                  <span>How to take your measurements accurately?</span>
                 </div>
                 <p className="text-slate-600 leading-relaxed pl-6">
-                  Usa una cinta métrica flexible manteniéndola horizontal al suelo y sin apretar contra la piel:
+                  Use a flexible measuring tape keeping it horizontal to the ground without tension against the skin:
                 </p>
                 <ul className="list-disc list-inside space-y-1 pl-6 text-slate-600">
-                  <li><strong>Pecho:</strong> Mide alrededor de la parte más prominente del torso.</li>
-                  <li><strong>Cintura:</strong> Mide alrededor del punto natural más estrecho del abdomen.</li>
-                  <li><strong>Cadera:</strong> De pie con los talones juntos, mide el contorno más ancho.</li>
-                  <li><strong>Ajuste:</strong> Si estás entre dos tallas, te sugerimos la talla menor para un corte entallado o la mayor para un fit relajado contemporáneo.</li>
+                  <li><strong>Chest:</strong> Measure around the fullest part of the torso.</li>
+                  <li><strong>Waist:</strong> Measure around the natural narrowest point of the waistline.</li>
+                  <li><strong>Hips:</strong> Standing with feet together, measure around the widest point.</li>
+                  <li><strong>Fit Advice:</strong> If you are between two sizes, choose the smaller size for a tailored fit or the larger for a relaxed contemporary aesthetic.</li>
                 </ul>
               </div>
             </div>
@@ -388,24 +388,24 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                 <div className="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                      100% Algodón Pima & Orgánico
+                      100% Pima & Organic Cotton
                     </span>
                   </div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-1.5">
-                    Camisetas, Polos y Sudaderas
+                    T-Shirts, Polos & Sweatshirts
                   </h4>
                   <ul className="space-y-1.5 text-xs text-slate-600">
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>Lavar a máquina a un máximo de 30°C en ciclo suave.</span>
+                      <span>Machine wash at max 30°C (86°F) on a delicate cycle.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>Utilizar detergentes neutros sin agentes blanqueadores.</span>
+                      <span>Use mild neutral detergent free of optical brighteners or bleach.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>Secar al aire a la sombra; evitar secadora para no encoger fibras.</span>
+                      <span>Line dry in the shade; avoid tumble drying to preserve fibers.</span>
                     </li>
                   </ul>
                 </div>
@@ -414,24 +414,24 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                 <div className="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
-                      Lino Europeo Lavado
+                      European Washed Linen
                     </span>
                   </div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-1.5">
-                    Sobrecamisas y Bermudas
+                    Overshirts & Summer Shorts
                   </h4>
                   <ul className="space-y-1.5 text-xs text-slate-600">
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                      <span>Lavado en agua fría o tibia con centrifugado suave (máx 800 rpm).</span>
+                      <span>Wash in cold or lukewarm water with a gentle spin (max 800 rpm).</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                      <span>Planchar mientras la prenda esté ligeramente húmeda con vapor.</span>
+                      <span>Steam iron while fabric is still slightly damp.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                      <span>El lino natural gana caída y suavidad lavado tras lavado.</span>
+                      <span>Natural linen gains softness and character with every wear and wash.</span>
                     </li>
                   </ul>
                 </div>
@@ -440,24 +440,24 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                 <div className="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
-                      Lana Virgen & Merino
+                      Virgin & Merino Wool
                     </span>
                   </div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-1.5">
-                    Abrigos y Chaquetas Estructuradas
+                    Coats & Tailored Outerwear
                   </h4>
                   <ul className="space-y-1.5 text-xs text-slate-600">
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-indigo-600 shrink-0 mt-0.5" />
-                      <span>Ventilar la prenda al aire fresco entre usos para regenerar la fibra.</span>
+                      <span>Air out garments in a fresh breeze between wears to revitalize fibers.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-indigo-600 shrink-0 mt-0.5" />
-                      <span>Lavado a mano en frío con jabón para lanas o limpieza en seco profesional.</span>
+                      <span>Cold hand wash with delicate wool detergent or specialist dry clean.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-indigo-600 shrink-0 mt-0.5" />
-                      <span>Secar siempre en horizontal sobre una toalla limpia, nunca colgar.</span>
+                      <span>Always dry flat on a clean towel; never hang wet knitwear or wool.</span>
                     </li>
                   </ul>
                 </div>
@@ -466,24 +466,24 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
                 <div className="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded">
-                      Denim Selvedge & Tejidos Técnicos
+                      Selvedge Denim & Technical Shells
                     </span>
                   </div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-1.5">
-                    Vaqueros, Cazadoras y Trenchs
+                    Denim Jeans, Jackets & Trench Coats
                   </h4>
                   <ul className="space-y-1.5 text-xs text-slate-600">
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" />
-                      <span>Denim: Lavar del revés en agua fría para mantener el tono índigo.</span>
+                      <span>Denim: Wash inside out in cold water to preserve natural indigo tones.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" />
-                      <span>Trench/Bomber: No usar suavizantes (destruyen el acabado hidrófugo).</span>
+                      <span>Technical wear: Avoid fabric softeners to protect water-repellent coatings.</span>
                     </li>
                     <li className="flex items-start gap-1.5">
                       <Check className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" />
-                      <span>Guardar en perchas anchas para mantener los hombros estructurados.</span>
+                      <span>Store on contoured wooden hangers to preserve tailored drape.</span>
                     </li>
                   </ul>
                 </div>
@@ -493,7 +493,7 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
               <div className="flex items-center gap-3 p-3.5 bg-blue-50/70 border border-blue-100 rounded-xl text-xs text-blue-900">
                 <Sparkles className="w-5 h-5 text-blue-600 shrink-0" />
                 <p>
-                  <strong>Compromiso FlitSide con la longevidad:</strong> Cuidar tus prendas a baja temperatura reduce la huella de carbono y multiplica la vida útil de cada tejido noble.
+                  <strong>FlitSide Longevity Commitment:</strong> Caring for your garments at lower temperatures reduces carbon footprints and significantly extends textile lifespan.
                 </p>
               </div>
             </div>
@@ -503,14 +503,14 @@ export const SizeCareGuideModal: React.FC<SizeCareGuideModalProps> = ({
         {/* Modal Footer */}
         <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
           <p className="text-xs text-slate-500">
-            ¿Dudas específicas sobre tu talla? Escríbenos a soporte@flitside.com
+            Have specific sizing questions? Reach us at concierge@flitside.com
           </p>
           <button
             id="btn-confirm-close-size-care-modal"
             onClick={onClose}
             className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors cursor-pointer"
           >
-            Entendido
+            Got it
           </button>
         </div>
       </div>

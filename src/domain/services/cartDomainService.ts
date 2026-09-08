@@ -84,7 +84,7 @@ export class CartDomainService {
     quantity: number = 1
   ): { items: CartItem[]; success: boolean; error?: string } {
     if (product.stock <= 0) {
-      return { items: currentItems, success: false, error: 'Esta prenda se encuentra agotada.' };
+      return { items: currentItems, success: false, error: 'This garment is currently out of stock.' };
     }
 
     const requestedQty = Math.max(1, quantity);

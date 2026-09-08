@@ -85,7 +85,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         shipping,
         total,
         paymentMethod,
-        status: 'Pendiente',
+        status: 'Pending',
       });
 
       setIsProcessing(false);
@@ -101,14 +101,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4 text-slate-700" />
             <h2 className="text-base font-semibold text-slate-900 tracking-wide uppercase">
-              Finalizar Pedido
+              Checkout
             </h2>
           </div>
           <button
             id="btn-close-checkout"
             onClick={onClose}
             className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md transition-colors cursor-pointer"
-            aria-label="Cerrar ventana de pago"
+            aria-label="Close checkout"
           >
             <X className="w-5 h-5" />
           </button>
@@ -118,15 +118,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {/* Section 1: Customer Details */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              1. Datos de Entrega
+              1. Delivery Details
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Nombre completo *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Full Name *</label>
                 <input
                   id="checkout-fullname"
                   type="text"
-                  placeholder="Ej. Carmen Navarro"
+                  placeholder="e.g. Alex Morgan"
                   value={customer.fullName}
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -137,11 +137,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Correo electrónico *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Email Address *</label>
                 <input
                   id="checkout-email"
                   type="email"
-                  placeholder="ejemplo@correo.com"
+                  placeholder="alex@example.com"
                   value={customer.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -152,11 +152,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Teléfono móvil *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Phone Number *</label>
                 <input
                   id="checkout-phone"
                   type="tel"
-                  placeholder="+34 600 000 000"
+                  placeholder="+1 (555) 019-2834"
                   value={customer.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -167,11 +167,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Ciudad *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">City *</label>
                 <input
                   id="checkout-city"
                   type="text"
-                  placeholder="Madrid, Barcelona, Sevilla..."
+                  placeholder="London, New York, Paris..."
                   value={customer.city}
                   onChange={(e) => handleInputChange('city', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -182,11 +182,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-slate-700 mb-1">Dirección completa *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Street Address *</label>
                 <input
                   id="checkout-address"
                   type="text"
-                  placeholder="Calle, número, piso, puerta"
+                  placeholder="123 Main Street, Apt 4B"
                   value={customer.address}
                   onChange={(e) => handleInputChange('address', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -197,11 +197,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Código Postal *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Postal / ZIP Code *</label>
                 <input
                   id="checkout-postalcode"
                   type="text"
-                  placeholder="28001"
+                  placeholder="10001"
                   value={customer.postalCode}
                   onChange={(e) => handleInputChange('postalCode', e.target.value)}
                   className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -212,11 +212,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Notas de entrega (opcional)</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Delivery Notes (optional)</label>
                 <input
                   id="checkout-notes"
                   type="text"
-                  placeholder="Llamar al timbre o dejar en portería"
+                  placeholder="Leave with concierge or ring doorbell"
                   value={customer.notes}
                   onChange={(e) => handleInputChange('notes', e.target.value)}
                   className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
@@ -228,7 +228,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {/* Section 2: Payment Method */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              2. Método de Pago
+              2. Payment Method
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <button
@@ -243,7 +243,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               >
                 <CreditCard className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Tarjeta Bancaria</span>
+                  <span className="text-xs font-semibold block">Credit / Debit Card</span>
                   <span className={`text-[10px] ${paymentMethod === 'credit_card' ? 'text-blue-100' : 'text-slate-400'}`}>
                     Visa, Mastercard
                   </span>
@@ -262,9 +262,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               >
                 <Landmark className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Transferencia</span>
+                  <span className="text-xs font-semibold block">Bank Transfer</span>
                   <span className={`text-[10px] ${paymentMethod === 'transfer' ? 'text-blue-100' : 'text-slate-400'}`}>
-                    Ingreso en cuenta
+                    Direct wire
                   </span>
                 </div>
               </button>
@@ -281,9 +281,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               >
                 <Truck className="w-4 h-4 mb-2" />
                 <div>
-                  <span className="text-xs font-semibold block">Contra Entrega</span>
+                  <span className="text-xs font-semibold block">Cash on Delivery</span>
                   <span className={`text-[10px] ${paymentMethod === 'cash_on_delivery' ? 'text-blue-100' : 'text-slate-400'}`}>
-                    Paga al recibir
+                    Pay on arrival
                   </span>
                 </div>
               </button>
@@ -293,7 +293,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             {paymentMethod === 'credit_card' && (
               <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-3 gap-2 text-xs">
                 <div className="col-span-3">
-                  <label className="block text-[11px] text-slate-500 mb-1">Número de tarjeta (simulado)</label>
+                  <label className="block text-[11px] text-slate-500 mb-1">Card Number</label>
                   <input
                     type="text"
                     value={cardNumber}
@@ -302,7 +302,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-[11px] text-slate-500 mb-1">Caducidad</label>
+                  <label className="block text-[11px] text-slate-500 mb-1">Expiry</label>
                   <input
                     type="text"
                     value={cardExpiry}
@@ -324,15 +324,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
             {paymentMethod === 'transfer' && (
               <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
-                <p className="font-semibold text-slate-800">Datos bancarios de la tienda:</p>
+                <p className="font-semibold text-slate-800">Official bank account details:</p>
                 <p className="font-mono mt-1 text-[11px]">IBAN: ES91 2100 0418 4502 0005 1324</p>
-                <p className="text-[11px] text-slate-500 mt-1">Indica tu nombre y número de orden como concepto de transferencia.</p>
+                <p className="text-[11px] text-slate-500 mt-1">Please specify your customer name and order number as the payment reference.</p>
               </div>
             )}
 
             {paymentMethod === 'cash_on_delivery' && (
               <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
-                <p className="text-[11px]">Podrás pagar en efectivo o tarjeta directamente al repartidor cuando entregue tu paquete.</p>
+                <p className="text-[11px]">Pay conveniently with card or cash directly to the courier upon delivery.</p>
               </div>
             )}
           </div>
@@ -340,21 +340,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {/* Section 3: Order Summary & Submit */}
           <div className="pt-4 border-t border-slate-200 bg-slate-50/50 p-4 rounded-xl">
             <div className="flex justify-between text-xs text-slate-600 mb-1">
-              <span>Artículos ({cartItems.reduce((acc, i) => acc + i.quantity, 0)})</span>
+              <span>Items ({cartItems.reduce((acc, i) => acc + i.quantity, 0)})</span>
               <span>{subtotal.toFixed(2)}€</span>
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-xs text-emerald-700 font-medium mb-1">
-                <span>Descuento ({promoCode})</span>
+                <span>Discount ({promoCode})</span>
                 <span>-{discountAmount.toFixed(2)}€</span>
               </div>
             )}
             <div className="flex justify-between text-xs text-slate-600 mb-2">
-              <span>Envío</span>
-              <span>{shipping === 0 ? 'Gratis' : `${shipping.toFixed(2)}€`}</span>
+              <span>Shipping</span>
+              <span>{shipping === 0 ? 'Free' : `${shipping.toFixed(2)}€`}</span>
             </div>
             <div className="flex justify-between text-base font-bold text-slate-900 pt-2 border-t border-slate-200">
-              <span>Total a pagar</span>
+              <span>Total amount</span>
               <span className="text-blue-600 text-lg">{total.toFixed(2)}€</span>
             </div>
 
@@ -365,16 +365,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               className="mt-4 w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg shadow-blue-200 transition-all cursor-pointer disabled:opacity-50 active:scale-[0.99]"
             >
               {isProcessing ? (
-                <span>Procesando pedido...</span>
+                <span>Processing order...</span>
               ) : (
                 <>
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Confirmar Pedido • {total.toFixed(2)}€</span>
+                  <span>Place Order • {total.toFixed(2)}€</span>
                 </>
               )}
             </button>
             <p className="text-[10px] text-center text-slate-400 mt-2">
-              Transacción cifrada y protegida. Tus datos se gestionan de forma segura.
+              Encrypted 256-bit checkout. Your payment details are protected with bank-grade security.
             </p>
           </div>
         </form>

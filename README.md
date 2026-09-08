@@ -1,80 +1,80 @@
 # FLITSIDE • Contemporary Fashion & Streetwear 👕✨
 
-> Plataforma digital de moda contemporánea diseñada para ofrecer una experiencia de compra ágil, estética y enfocada en el usuario.
+> Modern digital fashion platform engineered to deliver an agile, aesthetic, and customer-focused shopping experience.
 
 ---
 
-### 🌐 Visión General
+### 🌐 Overview
 
-**FlitSide** es una propuesta de indumentaria y calzado urbano donde el estilo contemporáneo, la comodidad y el diseño exclusivo se combinan en un entorno visual sobrio y moderno. 
+**FlitSide** brings together urban apparel, premium footwear, and contemporary styling where comfort and curated design meet a clean, editorial digital atmosphere.
 
-Este repositorio reúne la arquitectura de interfaz y experiencia de usuario (UX/UI) del ecosistema FlitSide, optimizada para ofrecer navegación intuitiva, transiciones fluidas y una interacción de alto rendimiento en cualquier dispositivo.
-
----
-
-### 🚀 Características Principales
-
-* 🛍️ **Catálogo de Colecciones**
-  * Exploración por categorías: *Hoodies, Camisetas, Pantalones, Calzado y Accesorios*.
-  * Filtrado dinámico por disponibilidad, rango de precios y novedades de temporada.
-  * Selector interactivo de tallas con guía de medidas integrada.
-
-* 🛒 **Bolsa de Compra & Checkout**
-  * Carrito lateral deslizable con actualización inmediata de stock y subtotales.
-  * Soporte para cupones promocionales y cálculo de envío.
-  * Formulario de checkout simplificado con validaciones en tiempo real.
-
-* ✨ **Experiencia de Marca Inmersiva**
-  * Pantalla de bienvenida con tipografía dinámica y animaciones de ritmo elástico.
-  * Micro-interacciones suaves y retroalimentación táctil impulsada por `motion`.
-  * Paleta visual sobria de alto contraste con soporte tipográfico editorial.
-
-* 📊 **Módulo de Gestión Operativa (Admin)**
-  * Tablero de control para visualización de métricas de catálogo.
-  * Seguimiento de órdenes y estado de despacho de pedidos.
-  * Control de inventario en tiempo real con alertas de stock mínimo.
-
-* 📱 **Arquitectura Totalmente Adaptativa (Responsive)**
-  * Diseñado bajo metodología Mobile-First.
-  * Adaptación precisa a smartphones, tablets y monitores de escritorio.
+This repository powers the interactive interface and user experience (UX/UI) of the FlitSide ecosystem, optimized for seamless navigation, fluid transitions, and high-performance interaction across all modern devices.
 
 ---
 
-### 🛠️ Tecnologías Utilizadas
+### 🚀 Key Features
 
-* **Frontend & Core:** React 18 + TypeScript
-* **Estilos & Diseño:** Tailwind CSS
-* **Animaciones:** Motion (`motion/react`)
-* **Iconografía:** Lucide React
-* **Empaquetador & Servidor:** Vite
+* 🛍️ **Curated Collections & Catalog**
+  * Effortless category browsing: *T-Shirts, Pants, Jackets, Footwear, and Accessories*.
+  * Instant filtering by availability, price range, and seasonal new arrivals.
+  * Interactive size selector with comprehensive measurement and fabric care guides.
+
+* 🛒 **Shopping Bag & Frictionless Checkout**
+  * Slide-over drawer with real-time stock sync and price calculation.
+  * Promotional discount code validation and flexible shipping tiers.
+  * Streamlined multi-step checkout with instant field validation and payment handling.
+
+* ✨ **Immersive Brand Experience**
+  * Signature welcome screen with dynamic typography and smooth entrance motion.
+  * High-precision micro-interactions powered by `motion`.
+  * High-contrast neutral color palette paired with editorial Syne display typography.
+
+* 📊 **Operations & Inventory Management**
+  * Clean control dashboard for live catalog monitoring.
+  * Real-time order tracking and fulfillment status updates.
+  * Warehouse stock control with automatic low-stock notifications.
+
+* 📱 **Fully Responsive Architecture**
+  * Crafted with a Mobile-First philosophy.
+  * Flawless layout adaptation across smartphones, tablets, and wide desktop displays.
 
 ---
 
-### 💻 Instalación y Ejecución
+### 🛠️ Technology Stack
 
-1. **Clonar el repositorio:**
+* **Client & Core:** React 18 + TypeScript
+* **Styling & Layout:** Tailwind CSS
+* **Motion & Transitions:** Motion (`motion/react`)
+* **Iconography:** Lucide React
+* **Build Tool:** Vite
+
+---
+
+### 💻 Installation & Quick Start
+
+1. **Clone repository:**
    ```bash
-   git clone https://github.com/tu-usuario/flitside.git
+   git clone https://github.com/your-username/flitside.git
    cd flitside
    ```
 
-2. **Instalar las dependencias:**
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Iniciar el servidor de desarrollo:**
+3. **Start local development server:**
    ```bash
    npm run dev
    ```
 
-4. **Generar la versión de producción:**
+4. **Compile production build:**
    ```bash
    npm run build
    ```
 
 ---
 
-### 📄 Licencia
+### 📄 License
 
-Desarrollado con dedicación  © FlitSide Studio.
+Crafted with dedication © FlitSide Studio. All rights reserved.

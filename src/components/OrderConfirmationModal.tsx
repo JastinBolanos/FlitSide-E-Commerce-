@@ -38,43 +38,43 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           </div>
 
           <span className="text-[11px] font-mono tracking-widest text-slate-400 uppercase">
-            PEDIDO CONFIRMADO
+            ORDER CONFIRMED
           </span>
-          <h2 className="text-xl font-medium text-slate-900 mt-1">¡Gracias por tu compra!</h2>
+          <h2 className="text-xl font-medium text-slate-900 mt-1">Thank you for your order!</h2>
           <p className="text-xs text-slate-500 mt-1">
-            Hemos recibido tu pedido y estamos preparándolo en nuestro taller.
+            We have received your order and are currently preparing it at our atelier.
           </p>
 
           {/* Order Details Card */}
           <div className="my-6 bg-slate-50 p-4 rounded-xl border border-slate-200/80 text-left space-y-3 text-xs">
             <div className="flex justify-between items-center pb-2 border-b border-slate-200">
-              <span className="text-slate-500">Número de referencia:</span>
+              <span className="text-slate-500">Order reference:</span>
               <span className="font-mono font-bold text-slate-900 text-sm">
                 {order.orderNumber}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-slate-500">Destinatario:</span>
+              <span className="text-slate-500">Recipient:</span>
               <span className="font-medium text-slate-800">{order.customer.fullName}</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-slate-500">Entrega en:</span>
+              <span className="text-slate-500">Delivery to:</span>
               <span className="text-slate-800 truncate max-w-[200px]">
                 {order.customer.address}, {order.customer.city}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-slate-500">Total abonado:</span>
+              <span className="text-slate-500">Total paid:</span>
               <span className="font-semibold text-slate-900">{order.total.toFixed(2)}€</span>
             </div>
 
             {/* Purchased Items Preview */}
             <div className="pt-2 border-t border-slate-200 space-y-1.5">
               <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
-                Prendas ({order.items.length})
+                Garments ({order.items.length})
               </span>
               {order.items.map((item, idx) => (
                 <div key={idx} className="flex justify-between text-[11px] text-slate-600">
@@ -94,7 +94,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
               onClick={onClose}
               className="w-full py-3.5 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer shadow-sm"
             >
-              Seguir Comprando
+              Continue Shopping
             </button>
           </div>
         </div>

@@ -92,7 +92,7 @@ export default function App() {
 
   const handleRemoveCartItem = (index: number) => {
     removeItem(index);
-    addToast('Prenda eliminada de la bolsa.', 'info');
+    addToast('Item removed from shopping bag.', 'info');
   };
 
   const handleProceedToCheckout = (discount: number, promoCode: string) => {
@@ -106,33 +106,33 @@ export default function App() {
     clearCart();
     setIsCheckoutOpen(false);
     setConfirmedOrder(order);
-    addToast(`¡Pedido ${order.orderNumber} confirmado correctamente!`, 'success');
+    addToast(`Order ${order.orderNumber} confirmed successfully!`, 'success');
   };
 
   // Admin inventory and order actions
   const handleAddProduct = (productData: Omit<Product, 'id' | 'createdAt'>) => {
     const created = addProduct(productData);
-    addToast(`Prenda "${created.name}" creada con éxito.`);
+    addToast(`Garment "${created.name}" created successfully.`, 'success');
   };
 
   const handleUpdateProduct = (id: string, updates: Partial<Product>) => {
     const updated = updateProduct(id, updates);
     if (updated) {
-      addToast(`Prenda "${updated.name}" actualizada.`);
+      addToast(`Garment "${updated.name}" updated.`, 'success');
     }
   };
 
   const handleDeleteProduct = (id: string) => {
     const ok = deleteProduct(id);
     if (ok) {
-      addToast('Prenda eliminada del catálogo.', 'info');
+      addToast('Garment removed from catalog.', 'info');
     }
   };
 
   const handleUpdateOrderStatus = (orderId: string, status: OrderStatus) => {
     const updated = updateOrderStatus(orderId, status);
     if (updated) {
-      addToast(`Pedido ${updated.orderNumber} actualizado a "${status}".`);
+      addToast(`Order ${updated.orderNumber} updated to "${status}".`, 'info');
     }
   };
 

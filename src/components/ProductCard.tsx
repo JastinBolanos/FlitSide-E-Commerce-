@@ -55,11 +55,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
           {isOutOfStock ? (
             <span className="px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-rose-600 text-white rounded-md shadow-xs">
-              Agotado
+              Sold Out
             </span>
           ) : isLowStock ? (
             <span className="px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-amber-500 text-white rounded-md shadow-xs">
-              Últimas {product.stock} u.
+              Only {product.stock} left
             </span>
           ) : null}
         </div>
@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-900 rounded-lg text-xs font-semibold tracking-wider uppercase shadow-md flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all border border-slate-200 cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5 text-blue-600" />
-            <span>Detalle</span>
+            <span>Details</span>
           </button>
         </div>
       </div>
@@ -141,11 +141,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
                 : 'bg-slate-900 hover:bg-blue-600 text-white shadow-xs'
             }`}
-            title={isOutOfStock ? 'Sin existencias' : 'Añadir al carrito'}
-            aria-label={`Añadir ${product.name} al carrito`}
+            title={isOutOfStock ? 'Sold out' : 'Add to bag'}
+            aria-label={`Add ${product.name} to bag`}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Añadir</span>
+            <span className="hidden sm:inline">Add</span>
           </button>
         </div>
       </div>

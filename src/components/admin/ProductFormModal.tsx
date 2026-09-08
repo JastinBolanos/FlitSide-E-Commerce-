@@ -9,15 +9,20 @@ interface ProductFormModalProps {
   initialProduct?: Product | null;
 }
 
-const CATEGORIES: ProductCategory[] = ['Camisetas', 'Pantalones', 'Chaquetas', 'Calzado', 'Accesorios'];
-const AVAILABLE_SIZES: ProductSize[] = ['XS', 'S', 'M', 'L', 'XL', 'Única'];
+const CATEGORIES: ProductCategory[] = ['T-Shirts', 'Pants', 'Jackets', 'Footwear', 'Accessories'];
+const AVAILABLE_SIZES: ProductSize[] = ['XS', 'S', 'M', 'L', 'XL', 'One Size'];
 
-const DEFAULT_IMAGES: Record<ProductCategory, string> = {
-  Camisetas: '/images/prod-1.jpg',
-  Pantalones: '/images/prod-3.jpg',
-  Chaquetas: '/images/prod-4.jpg',
-  Calzado: '/images/prod-6.jpg',
-  Accesorios: '/images/prod-8.jpg',
+const DEFAULT_IMAGES: Record<string, string> = {
+  'T-Shirts': '/images/prod-1.jpg',
+  'Pants': '/images/prod-3.jpg',
+  'Jackets': '/images/prod-4.jpg',
+  'Footwear': '/images/prod-6.jpg',
+  'Accessories': '/images/prod-8.jpg',
+  'Camisetas': '/images/prod-1.jpg',
+  'Pantalones': '/images/prod-3.jpg',
+  'Chaquetas': '/images/prod-4.jpg',
+  'Calzado': '/images/prod-6.jpg',
+  'Accesorios': '/images/prod-8.jpg',
 };
 
 export const ProductFormModal: React.FC<ProductFormModalProps> = ({
@@ -31,7 +36,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   const isEditing = !!initialProduct;
 
   const [name, setName] = useState('');
-  const [category, setCategory] = useState<ProductCategory>('Camisetas');
+  const [category, setCategory] = useState<ProductCategory>('T-Shirts');
   const [price, setPrice] = useState<number>(35);
   const [originalPrice, setOriginalPrice] = useState<number | undefined>(undefined);
   const [stock, setStock] = useState<number>(10);
@@ -59,7 +64,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       setFeatured(!!initialProduct.featured);
     } else {
       setName('');
-      setCategory('Camisetas');
+      setCategory('T-Shirts');
       setPrice(35);
       setOriginalPrice(undefined);
       setStock(10);
@@ -67,7 +72,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
       setMaterial('');
       setSizes(['S', 'M', 'L']);
       setColors(['#0f172a', '#94a3b8']);
-      setImageUrl(DEFAULT_IMAGES.Camisetas);
+      setImageUrl(DEFAULT_IMAGES['T-Shirts']);
       setFeatured(false);
     }
     setErrors({});
@@ -98,17 +103,17 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
   const handleCategoryChange = (newCat: ProductCategory) => {
     setCategory(newCat);
     if (!imageUrl || Object.values(DEFAULT_IMAGES).includes(imageUrl)) {
-      setImageUrl(DEFAULT_IMAGES[newCat]);
+      setImageUrl(DEFAULT_IMAGES[newCat] || DEFAULT_IMAGES['T-Shirts']);
     }
   };
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
-    if (!name.trim()) errs.name = 'El nombre de la prenda es obligatorio';
-    if (price <= 0) errs.price = 'El precio debe ser superior a 0';
-    if (stock < 0) errs.stock = 'El stock no puede ser negativo';
-    if (!imageUrl.trim()) errs.imageUrl = 'Introduce una URL de imagen válida';
-    if (sizes.length === 0) errs.sizes = 'Selecciona al menos una talla';
+    if (!name.trim()) errs.name = 'Garment name is required';
+    if (price <= 0) errs.price = 'Price must be greater than 0';
+    if (stock < 0) errs.stock = 'Stock cannot be negative';
+    if (!imageUrl.trim()) errs.imageUrl = 'Please provide a valid image URL';
+    if (sizes.length === 0) errs.sizes = 'Please select at least one size';
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -125,11 +130,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
         price,
         originalPrice: originalPrice && originalPrice > price ? originalPrice : undefined,
         stock,
-        description: description.trim() || `${name} en tejido de alta calidad para un estilo limpio y duradero.`,
+        description: description.trim() || `${name} crafted from fine textiles for a clean, enduring aesthetic.`,
         material: material.trim() || undefined,
         sizes,
         colors,
-        imageUrl: imageUrl.trim() || DEFAULT_IMAGES[category],
+        imageUrl: imageUrl.trim() || DEFAULT_IMAGES[category] || DEFAULT_IMAGES['T-Shirts'],
         featured,
       },
       initialProduct?.id
@@ -142,13 +147,13 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <h2 className="text-base font-semibold text-slate-900">
-            {isEditing ? 'Editar Prenda' : 'Añadir Nueva Prenda al Inventario'}
+            {isEditing ? 'Edit Garment' : 'Add New Garment to Inventory'}
           </h2>
           <button
             id="btn-close-product-form"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md"
-            aria-label="Cerrar formulario"
+            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md cursor-pointer"
+            aria-label="Close form"
           >
             <X className="w-5 h-5" />
           </button>
@@ -158,11 +163,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           {/* Row 1: Name and Category */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-medium text-slate-700 mb-1">Nombre de la prenda *</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Garment Name *</label>
               <input
                 id="product-form-name"
                 type="text"
-                placeholder="Ej. Sobrecamisa de Lana Pura"
+                placeholder="e.g. Pure Virgin Wool Overshirt"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={`w-full px-3 py-2 text-xs bg-white border rounded-lg focus:outline-none focus:ring-1 ${
@@ -173,12 +178,12 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Categoría *</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Category *</label>
               <select
                 id="product-form-category"
                 value={category}
                 onChange={(e) => handleCategoryChange(e.target.value as ProductCategory)}
-                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
+                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900 cursor-pointer"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -192,7 +197,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           {/* Row 2: Price, Original Price, Stock */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Precio (€) *</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Price (€) *</label>
               <input
                 id="product-form-price"
                 type="number"
@@ -206,13 +211,13 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Precio anterior / tachado (€)</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Original Price (€)</label>
               <input
                 id="product-form-original-price"
                 type="number"
                 step="0.5"
                 min="0"
-                placeholder="Opcional"
+                placeholder="Optional"
                 value={originalPrice ?? ''}
                 onChange={(e) =>
                   setOriginalPrice(e.target.value ? parseFloat(e.target.value) : undefined)
@@ -222,7 +227,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Stock disponible *</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Available Stock *</label>
               <input
                 id="product-form-stock"
                 type="number"
@@ -237,7 +242,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
           {/* Row 3: Image URL with preview */}
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1">URL de la imagen *</label>
+            <label className="block text-xs font-medium text-slate-700 mb-1">Image URL *</label>
             <div className="flex gap-2">
               <input
                 id="product-form-image"
@@ -249,10 +254,10 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
               />
               <button
                 type="button"
-                onClick={() => setImageUrl(DEFAULT_IMAGES[category])}
-                className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg whitespace-nowrap"
+                onClick={() => setImageUrl(DEFAULT_IMAGES[category] || DEFAULT_IMAGES['T-Shirts'])}
+                className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg whitespace-nowrap cursor-pointer"
               >
-                Foto sugerida
+                Suggested photo
               </button>
             </div>
             {errors.imageUrl && <p className="text-[11px] text-rose-500 mt-1">{errors.imageUrl}</p>}
@@ -261,11 +266,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           {/* Row 4: Description & Material */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Descripción de la prenda</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Garment Description</label>
               <textarea
                 id="product-form-desc"
                 rows={3}
-                placeholder="Detalla corte, tacto, estilo y ocasiones recomendadas..."
+                placeholder="Describe cut, silhouette, feel and styling notes..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
@@ -273,11 +278,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Composición / Material</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Composition / Material</label>
               <input
                 id="product-form-material"
                 type="text"
-                placeholder="Ej. 100% Algodón orgánico certificado"
+                placeholder="e.g. 100% Certified Organic Cotton"
                 value={material}
                 onChange={(e) => setMaterial(e.target.value)}
                 className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900 mb-3"
@@ -289,16 +294,16 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                   type="checkbox"
                   checked={featured}
                   onChange={(e) => setFeatured(e.target.checked)}
-                  className="rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                  className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
                 />
-                <span>Destacar en portada de catálogo</span>
+                <span>Feature in collection showcase</span>
               </label>
             </div>
           </div>
 
           {/* Row 5: Sizes Selection */}
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1.5">Tallas disponibles</label>
+            <label className="block text-xs font-medium text-slate-700 mb-1.5">Available Sizes</label>
             <div className="flex flex-wrap gap-2">
               {AVAILABLE_SIZES.map((size) => {
                 const isSelected = sizes.includes(size);
@@ -323,7 +328,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
           {/* Row 6: Colors */}
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1.5">Colores</label>
+            <label className="block text-xs font-medium text-slate-700 mb-1.5">Colors</label>
             <div className="flex items-center gap-2 flex-wrap">
               {colors.map((color, idx) => (
                 <div
@@ -339,7 +344,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                     <button
                       type="button"
                       onClick={() => removeColor(color)}
-                      className="text-slate-400 hover:text-rose-500 p-0.5 ml-1"
+                      className="text-slate-400 hover:text-rose-500 p-0.5 ml-1 cursor-pointer"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -353,14 +358,14 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                   value={newColor}
                   onChange={(e) => setNewColor(e.target.value)}
                   className="w-8 h-8 rounded border border-slate-300 cursor-pointer p-0.5"
-                  title="Seleccionar nuevo color"
+                  title="Select new color"
                 />
                 <button
                   type="button"
                   onClick={addColor}
                   className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-medium cursor-pointer"
                 >
-                  Añadir color
+                  Add color
                 </button>
               </div>
             </div>
@@ -373,14 +378,14 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
             >
-              Cancelar
+              Cancel
             </button>
             <button
               id="btn-save-product"
               type="submit"
               className="px-5 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors shadow-xs cursor-pointer"
             >
-              {isEditing ? 'Guardar Cambios' : 'Crear Prenda'}
+              {isEditing ? 'Save Changes' : 'Create Garment'}
             </button>
           </div>
         </form>

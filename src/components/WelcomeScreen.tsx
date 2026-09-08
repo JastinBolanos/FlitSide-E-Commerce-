@@ -125,10 +125,10 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onEnter }) => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="text-slate-300 text-xs sm:text-sm md:text-base font-light tracking-[0.2em] sm:tracking-[0.25em] uppercase max-w-2xl mx-auto mt-4 sm:mt-6 mb-8 sm:mb-10"
         >
-          Ropa y moda de estilo contemporáneo • Streetwear y prendas de diseño exclusivo
+          Contemporary fashion & streetwear • Exclusive designs crafted for modern distinction
         </motion.p>
 
-        {/* Ingresar Button */}
+        {/* Enter Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,7 +141,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onEnter }) => {
             autoFocus
             className="group relative inline-flex items-center justify-center gap-3 px-10 sm:px-14 py-4 sm:py-5 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-extrabold text-base sm:text-lg tracking-wider uppercase transition-all duration-300 shadow-[0_10px_35px_rgba(255,255,255,0.2)] hover:shadow-[0_15px_45px_rgba(255,255,255,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <span>INGRESAR</span>
+            <span>ENTER STORE</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5" />
           </button>
         </motion.div>
@@ -152,15 +152,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onEnter }) => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2.5 text-xs text-slate-400">
             <Truck className="w-4 h-4 text-slate-300" />
-            <span>Envío Express 24/48h a toda la península</span>
+            <span>Express 24/48h delivery nationwide & international</span>
           </div>
           <div className="flex items-center justify-center gap-2.5 text-xs text-slate-400">
             <Sparkles className="w-4 h-4 text-slate-300" />
-            <span>Prendas exclusivas y confección premium</span>
+            <span>Exclusive garments with architectural craftsmanship</span>
           </div>
           <div className="flex items-center justify-center sm:justify-end gap-2.5 text-xs text-slate-400">
             <ShieldCheck className="w-4 h-4 text-slate-300" />
-            <span>Garantía de cambio y devolución fácil</span>
+            <span>Hassle-free 30-day exchanges & returns</span>
           </div>
         </div>
       </footer>

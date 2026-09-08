@@ -48,11 +48,11 @@ export function useCart(): UseCartReturn {
     ): { success: boolean; message: string } => {
       const result = CartDomainService.addItem(cartItems, product, size, color, quantity);
       if (!result.success) {
-        return { success: false, message: result.error || 'No se pudo añadir la prenda.' };
+        return { success: false, message: result.error || 'Could not add item to bag.' };
       }
 
       setCartItems(result.items);
-      return { success: true, message: `"${product.name}" añadido a la bolsa.` };
+      return { success: true, message: `"${product.name}" added to bag.` };
     },
     [cartItems]
   );

@@ -1,6 +1,6 @@
 import { ProductSize } from './product';
 
-export type OrderStatus = 'Pendiente' | 'En preparación' | 'Enviado' | 'Entregado' | 'Cancelado';
+export type OrderStatus = 'Pending' | 'In Preparation' | 'Shipped' | 'Delivered' | 'Cancelled' | 'Pendiente' | 'En preparación' | 'Enviado' | 'Entregado' | 'Cancelado';
 
 export interface CustomerInfo {
   fullName: string;

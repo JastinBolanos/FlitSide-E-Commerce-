@@ -51,7 +51,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           id="btn-close-product-modal"
           onClick={onClose}
           className="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-slate-900 bg-white/80 backdrop-blur-xs rounded-full transition-colors cursor-pointer"
-          aria-label="Cerrar vista de producto"
+          aria-label="Close product view"
         >
           <X className="w-5 h-5" />
         </button>
@@ -72,7 +72,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           />
           {product.stock <= 5 && product.stock > 0 && (
             <div className="absolute bottom-3 left-3 bg-amber-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
-              ¡Solo quedan {product.stock} unidades!
+              Only {product.stock} items left!
             </div>
           )}
         </div>
@@ -104,14 +104,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
             {product.material && (
               <div className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                <strong className="text-slate-700 font-medium">Composición:</strong> {product.material}
+                <strong className="text-slate-700 font-medium">Composition:</strong> {product.material}
               </div>
             )}
 
             {/* Size Selector */}
             <div>
               <div className="flex items-center justify-between text-xs font-medium text-slate-700 mb-2">
-                <span>Seleccionar Talla</span>
+                <span>Select Size</span>
                 {onOpenSizeGuide ? (
                   <button
                     type="button"
@@ -120,10 +120,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="text-blue-600 hover:text-blue-800 text-[11px] font-semibold underline cursor-pointer flex items-center gap-1"
                   >
                     <Ruler className="w-3 h-3" />
-                    <span>Guía de tallas</span>
+                    <span>Size Guide</span>
                   </button>
                 ) : (
-                  <span className="text-slate-400 font-normal">Talla seleccionada: {selectedSize}</span>
+                  <span className="text-slate-400 font-normal">Selected size: {selectedSize}</span>
                 )}
               </div>
               <div className="flex flex-wrap gap-2">
@@ -157,7 +157,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       selectedColor === color ? 'ring-2 ring-blue-600 ring-offset-2 scale-110' : 'border-slate-300 hover:scale-105'
                     }`}
                     style={{ backgroundColor: color }}
-                    aria-label={`Seleccionar color ${color}`}
+                    aria-label={`Select color ${color}`}
                   >
                     {selectedColor === color && (
                       <Check className={`w-3.5 h-3.5 ${color === '#f8fafc' ? 'text-slate-900' : 'text-white'}`} />
@@ -170,7 +170,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Quantity Selector */}
             {!isOutOfStock && (
               <div>
-                <span className="block text-xs font-medium text-slate-700 mb-2">Cantidad</span>
+                <span className="block text-xs font-medium text-slate-700 mb-2">Quantity</span>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
                     <button
@@ -194,7 +194,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     </button>
                   </div>
                   <span className="text-[11px] text-slate-400">
-                    Disponibles: {product.stock}
+                    In stock: {product.stock}
                   </span>
                 </div>
               </div>
@@ -218,14 +218,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {addedAnimation ? (
                 <>
                   <Check className="w-4 h-4" />
-                  <span>¡Añadido al Carrito!</span>
+                  <span>Added to Bag!</span>
                 </>
               ) : isOutOfStock ? (
-                <span>Prenda Agotada</span>
+                <span>Out of Stock</span>
               ) : (
                 <>
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Añadir al Carrito • {(product.price * quantity).toFixed(2)}€</span>
+                  <span>Add to Bag • {(product.price * quantity).toFixed(2)}€</span>
                 </>
               )}
             </button>
@@ -234,15 +234,15 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="grid grid-cols-3 gap-2 pt-1 text-[10px] text-slate-500 text-center font-medium">
               <div className="flex flex-col items-center gap-1">
                 <Truck className="w-3.5 h-3.5 text-slate-400" />
-                <span>Envío 24/48h</span>
+                <span>Express 24/48h</span>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
-                <span>Devolución 30d</span>
+                <span>30-Day Returns</span>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-                <span>Pago Seguro</span>
+                <span>Secure Checkout</span>
               </div>
             </div>
           </div>

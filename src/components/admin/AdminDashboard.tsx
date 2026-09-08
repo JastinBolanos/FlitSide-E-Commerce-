@@ -71,8 +71,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const totalStock = useMemo(() => products.reduce((acc, p) => acc + p.stock, 0), [products]);
   const lowStockCount = useMemo(() => products.filter((p) => p.stock > 0 && p.stock <= 5).length, [products]);
   const outOfStockCount = useMemo(() => products.filter((p) => p.stock === 0).length, [products]);
-  const pendingOrdersCount = useMemo(() => orders.filter((o) => o.status === 'Pendiente' || o.status === 'En preparación').length, [orders]);
-  const completedOrdersCount = useMemo(() => orders.filter((o) => o.status === 'Entregado').length, [orders]);
+  const pendingOrdersCount = useMemo(
+    () =>
+      orders.filter(
+        (o) =>
+          o.status === 'Pending' ||
+          o.status === 'In Preparation' ||
+          o.status === 'Pendiente' ||
+          o.status === 'En preparación'
+      ).length,
+    [orders]
+  );
+  const completedOrdersCount = useMemo(
+    () => orders.filter((o) => o.status === 'Delivered' || o.status === 'Entregado').length,
+    [orders]
+  );
 
   // Filtered Products
   const filteredProducts = useMemo(() => {
@@ -91,7 +104,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Filtered Orders
   const filteredOrders = useMemo(() => {
     return orders.filter((o) => {
-      if (orderStatusFilter !== 'all' && o.status !== orderStatusFilter) return false;
+      if (orderStatusFilter !== 'all') {
+        const matchesFilter =
+          o.status === orderStatusFilter ||
+          (orderStatusFilter === 'Pending' && o.status === 'Pendiente') ||
+          (orderStatusFilter === 'In Preparation' && o.status === 'En preparación') ||
+          (orderStatusFilter === 'Shipped' && o.status === 'Enviado') ||
+          (orderStatusFilter === 'Delivered' && o.status === 'Entregado') ||
+          (orderStatusFilter === 'Cancelled' && o.status === 'Cancelado');
+        if (!matchesFilter) return false;
+      }
       if (orderSearch.trim()) {
         const q = orderSearch.toLowerCase();
         const matchNum = o.orderNumber.toLowerCase().includes(q);
@@ -124,16 +146,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const getStatusBadgeClass = (status: OrderStatus) => {
     switch (status) {
+      case 'Pending':
       case 'Pendiente':
         return 'bg-amber-100 text-amber-800 border-amber-300';
+      case 'In Preparation':
       case 'En preparación':
         return 'bg-blue-100 text-blue-800 border-blue-300';
+      case 'Shipped':
       case 'Enviado':
         return 'bg-purple-100 text-purple-800 border-purple-300';
+      case 'Delivered':
       case 'Entregado':
         return 'bg-emerald-100 text-emerald-800 border-emerald-300';
+      case 'Cancelled':
       case 'Cancelado':
         return 'bg-rose-100 text-rose-800 border-rose-300';
+      default:
+        return 'bg-slate-100 text-slate-800 border-slate-300';
     }
   };
 
@@ -145,10 +174,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
             <span>FlitSide Studio</span>
             <span>•</span>
-            <span className="text-blue-600">Panel de Control Operativo</span>
+            <span className="text-blue-600">Operations Control Center</span>
           </div>
           <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            Inventario y Pedidos de Clientes
+            Inventory & Customer Orders
           </h1>
         </div>
 
@@ -163,7 +192,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold tracking-wider uppercase shadow-md shadow-blue-200 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Nueva Prenda</span>
+            <span>New Garment</span>
           </button>
         </div>
       </div>
@@ -172,44 +201,44 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-6">
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between text-slate-400 text-xs font-medium mb-1">
-            <span>Catálogo Activo</span>
+            <span>Active Catalog</span>
             <Package className="w-4 h-4 text-blue-600" />
           </div>
           <p className="text-2xl font-bold text-slate-900">{products.length}</p>
-          <span className="text-[11px] text-slate-500 font-normal">referencias de prendas</span>
+          <span className="text-[11px] text-slate-500 font-normal">garment styles</span>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between text-slate-400 text-xs font-medium mb-1">
-            <span>Unidades Almacén</span>
+            <span>Warehouse Units</span>
             <Package className="w-4 h-4 text-slate-500" />
           </div>
           <p className="text-2xl font-bold text-slate-900">{totalStock}</p>
           <span className="text-[11px] text-slate-500 font-normal">
             {lowStockCount > 0 ? (
-              <span className="text-amber-600 font-medium">⚠️ {lowStockCount} bajo stock</span>
+              <span className="text-amber-600 font-medium">⚠️ {lowStockCount} low stock</span>
             ) : (
-              'Stock equilibrado'
+              'Balanced stock'
             )}
           </span>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between text-slate-400 text-xs font-medium mb-1">
-            <span>Pedidos en Trámite</span>
+            <span>Orders In Progress</span>
             <Clock className="w-4 h-4 text-amber-500" />
           </div>
           <p className="text-2xl font-bold text-slate-900">{pendingOrdersCount}</p>
-          <span className="text-[11px] text-amber-600 font-medium">pendientes o en preparación</span>
+          <span className="text-[11px] text-amber-600 font-medium">pending or in preparation</span>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between text-slate-400 text-xs font-medium mb-1">
-            <span>Pedidos Entregados</span>
+            <span>Fulfilled Orders</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
           </div>
           <p className="text-2xl font-bold text-slate-900">{completedOrdersCount}</p>
-          <span className="text-[11px] text-slate-500 font-normal">de {orders.length} pedidos totales</span>
+          <span className="text-[11px] text-slate-500 font-normal">out of {orders.length} total orders</span>
         </div>
       </div>
 
@@ -226,7 +255,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             }`}
           >
             <Package className="w-4 h-4" />
-            <span>Inventario de Prendas</span>
+            <span>Garment Inventory</span>
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono ${
               activeTab === 'inventory' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-700'
             }`}>
@@ -244,7 +273,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             }`}
           >
             <ShoppingBag className="w-4 h-4" />
-            <span>Gestión de Pedidos</span>
+            <span>Order Management</span>
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono ${
               activeTab === 'orders' ? 'bg-blue-50 text-blue-700' : 'bg-slate-100 text-slate-700'
             }`}>
@@ -265,7 +294,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <input
                 id="admin-inventory-search"
                 type="text"
-                placeholder="Buscar por nombre o prenda..."
+                placeholder="Search by style name or garment..."
                 value={productSearch}
                 onChange={(e) => setProductSearch(e.target.value)}
                 className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
@@ -274,19 +303,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             {/* Category selector */}
             <div className="flex items-center gap-2 flex-wrap text-xs">
-              <span className="text-slate-500 font-medium">Categoría:</span>
+              <span className="text-slate-500 font-medium">Category:</span>
               <select
                 id="admin-cat-filter"
                 value={selectedCatFilter}
                 onChange={(e) => setSelectedCatFilter(e.target.value)}
                 className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900 cursor-pointer"
               >
-                <option value="all">Todas las categorías</option>
-                <option value="Camisetas">Camisetas</option>
-                <option value="Pantalones">Pantalones</option>
-                <option value="Chaquetas">Chaquetas</option>
-                <option value="Calzado">Calzado</option>
-                <option value="Accesorios">Accesorios</option>
+                <option value="all">All Categories</option>
+                <option value="T-Shirts">T-Shirts</option>
+                <option value="Pants">Pants</option>
+                <option value="Jackets">Jackets</option>
+                <option value="Footwear">Footwear</option>
+                <option value="Accessories">Accessories</option>
               </select>
 
               {/* Stock status filter */}
@@ -296,9 +325,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 onChange={(e) => setStockFilter(e.target.value as any)}
                 className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900 cursor-pointer"
               >
-                <option value="all">Cualquier stock</option>
-                <option value="low">Bajo stock (≤ 5 u.)</option>
-                <option value="out">Sin stock (0 u.)</option>
+                <option value="all">All Stock Levels</option>
+                <option value="low">Low Stock (≤ 5 units)</option>
+                <option value="out">Out of Stock (0 units)</option>
               </select>
             </div>
           </div>
@@ -309,19 +338,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase tracking-wider text-[10px]">
                   <tr>
-                    <th className="py-3 px-4">Prenda</th>
-                    <th className="py-3 px-4">Categoría</th>
-                    <th className="py-3 px-4">Precio</th>
-                    <th className="py-3 px-4">Tallas</th>
-                    <th className="py-3 px-4 text-center">Stock Almacén</th>
-                    <th className="py-3 px-4 text-right">Acciones</th>
+                    <th className="py-3 px-4">Garment</th>
+                    <th className="py-3 px-4">Category</th>
+                    <th className="py-3 px-4">Price</th>
+                    <th className="py-3 px-4">Sizes</th>
+                    <th className="py-3 px-4 text-center">Warehouse Stock</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredProducts.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="py-12 text-center text-slate-400">
-                        No se encontraron prendas en el inventario que coincidan con la búsqueda.
+                        No garments found in inventory matching your search.
                       </td>
                     </tr>
                   ) : (
@@ -382,13 +411,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                 onClick={() => handleStockQuickStep(p.id, p.stock, -1)}
                                 disabled={p.stock <= 0}
                                 className="px-2 py-1 text-slate-600 hover:bg-slate-200 disabled:opacity-30 cursor-pointer font-bold"
-                                title="Reducir 1 unidad"
+                                title="Decrease 1 unit"
                               >
                                 -
                               </button>
                               <span
                                 className={`px-2.5 py-1 font-semibold font-mono text-xs bg-white min-w-9 text-center ${
-                                  isOut ? 'text-rose-600 bg-rose-50' : isLow ? 'text-amber-600 bg-amber-50' : 'text-slate-800'
+                                   isOut ? 'text-rose-600 bg-rose-50' : isLow ? 'text-amber-600 bg-amber-50' : 'text-slate-800'
                                 }`}
                               >
                                 {p.stock}
@@ -396,19 +425,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               <button
                                 onClick={() => handleStockQuickStep(p.id, p.stock, 1)}
                                 className="px-2 py-1 text-slate-600 hover:bg-slate-200 cursor-pointer font-bold"
-                                title="Añadir 1 unidad"
+                                title="Add 1 unit"
                               >
                                 +
                               </button>
                             </div>
                             {isLow && (
                               <span className="block text-[9px] text-amber-600 font-semibold uppercase mt-0.5">
-                                Bajo stock
+                                Low stock
                               </span>
                             )}
                             {isOut && (
                               <span className="block text-[9px] text-rose-600 font-semibold uppercase mt-0.5">
-                                Agotado
+                                Out of stock
                               </span>
                             )}
                           </td>
@@ -423,19 +452,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                   setIsProductFormOpen(true);
                                 }}
                                 className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors cursor-pointer"
-                                title="Editar prenda"
+                                title="Edit garment"
                               >
                                 <Edit2 className="w-3.5 h-3.5" />
                               </button>
                               <button
                                 id={`btn-delete-prod-${p.id}`}
                                 onClick={() => {
-                                  if (confirm(`¿Eliminar definitivamente "${p.name}" del catálogo?`)) {
+                                  if (confirm(`Permanently remove "${p.name}" from catalog?`)) {
                                     onDeleteProduct(p.id);
                                   }
                                 }}
                                 className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors cursor-pointer"
-                                title="Eliminar prenda"
+                                title="Delete garment"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
@@ -463,7 +492,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <input
                 id="admin-orders-search"
                 type="text"
-                placeholder="Buscar por referencia, cliente o ciudad..."
+                placeholder="Search by order #, customer, or city..."
                 value={orderSearch}
                 onChange={(e) => setOrderSearch(e.target.value)}
                 className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
@@ -472,19 +501,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             {/* Status pills */}
             <div className="flex items-center gap-1.5 flex-wrap text-xs">
-              <span className="text-slate-500 font-medium mr-1">Estado:</span>
-              {['all', 'Pendiente', 'En preparación', 'Enviado', 'Entregado', 'Cancelado'].map((status) => (
+              <span className="text-slate-500 font-medium mr-1">Status:</span>
+              {[
+                { label: 'All', value: 'all' },
+                { label: 'Pending', value: 'Pending' },
+                { label: 'In Preparation', value: 'In Preparation' },
+                { label: 'Shipped', value: 'Shipped' },
+                { label: 'Delivered', value: 'Delivered' },
+                { label: 'Cancelled', value: 'Cancelled' },
+              ].map(({ label, value }) => (
                 <button
-                  key={status}
-                  id={`filter-order-${status}`}
-                  onClick={() => setOrderStatusFilter(status)}
+                  key={value}
+                  id={`filter-order-${value}`}
+                  onClick={() => setOrderStatusFilter(value)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
-                    orderStatusFilter === status
+                    orderStatusFilter === value
                       ? 'bg-blue-600 text-white shadow-xs'
                       : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 shadow-sm'
                   }`}
                 >
-                  {status === 'all' ? 'Todos' : status}
+                  {label}
                 </button>
               ))}
             </div>
@@ -496,20 +532,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 uppercase tracking-wider text-[10px]">
                   <tr>
-                    <th className="py-3 px-4">Referencia</th>
-                    <th className="py-3 px-4">Cliente</th>
-                    <th className="py-3 px-4">Fecha</th>
-                    <th className="py-3 px-4">Prendas</th>
+                    <th className="py-3 px-4">Order #</th>
+                    <th className="py-3 px-4">Customer</th>
+                    <th className="py-3 px-4">Date</th>
+                    <th className="py-3 px-4">Items</th>
                     <th className="py-3 px-4">Total</th>
-                    <th className="py-3 px-4">Estado</th>
-                    <th className="py-3 px-4 text-right">Detalle</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredOrders.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="py-12 text-center text-slate-400">
-                        No se encontraron pedidos con los filtros actuales.
+                        No orders found matching the selected filters.
                       </td>
                     </tr>
                   ) : (
@@ -525,10 +561,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             </span>
                             <span className="text-[10px] text-slate-400 capitalize">
                               {order.paymentMethod === 'credit_card'
-                                ? 'Tarjeta'
+                                ? 'Card'
                                 : order.paymentMethod === 'transfer'
-                                ? 'Transferencia'
-                                : 'Contra entrega'}
+                                ? 'Wire Transfer'
+                                : 'Cash on Delivery'}
                             </span>
                           </td>
 
@@ -544,7 +580,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                           {/* Date */}
                           <td className="py-3 px-4 text-slate-600 font-mono text-[11px]">
-                            {new Date(order.createdAt).toLocaleDateString('es-ES', {
+                            {new Date(order.createdAt).toLocaleDateString('en-US', {
                               day: '2-digit',
                               month: 'short',
                               year: 'numeric',
@@ -553,7 +589,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                           {/* Items count & preview */}
                           <td className="py-3 px-4 text-slate-700">
-                            <span className="font-medium">{totalQty} {totalQty === 1 ? 'prenda' : 'prendas'}</span>
+                            <span className="font-medium">{totalQty} {totalQty === 1 ? 'item' : 'items'}</span>
                             <span className="text-[11px] text-slate-400 block line-clamp-1">
                               {order.items.map((i) => i.name).join(', ')}
                             </span>
@@ -574,11 +610,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                 order.status
                               )}`}
                             >
-                              <option value="Pendiente">Pendiente</option>
-                              <option value="En preparación">En preparación</option>
-                              <option value="Enviado">Enviado</option>
-                              <option value="Entregado">Entregado</option>
-                              <option value="Cancelado">Cancelado</option>
+                              <option value="Pending">Pending</option>
+                              <option value="In Preparation">In Preparation</option>
+                              <option value="Shipped">Shipped</option>
+                              <option value="Delivered">Delivered</option>
+                              <option value="Cancelled">Cancelled</option>
                             </select>
                           </td>
 
@@ -590,7 +626,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-medium transition-colors cursor-pointer"
                             >
                               <Eye className="w-3.5 h-3.5" />
-                              <span>Ver</span>
+                              <span>View</span>
                             </button>
                           </td>
                         </tr>

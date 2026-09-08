@@ -1,13 +1,13 @@
 /**
  * Cloud Database Adapters & Schema Blueprint
  * 
- * Este archivo contiene los esquemas SQL para Supabase (PostgreSQL)
- * y las reglas de seguridad / colecciones para Firebase Firestore,
- * permitiendo conectar una base de datos en la nube sin cambiar
- * la lógica del frontend.
+ * This file contains SQL schemas for Supabase (PostgreSQL)
+ * and security rules / collections for Firebase Firestore,
+ * enabling direct cloud persistence connections without altering
+ * application domain architecture.
  */
 
-export const SUPABASE_SQL_SCHEMA = `-- 1. Tabla de Productos
+export const SUPABASE_SQL_SCHEMA = `-- 1. Products Table
 CREATE TABLE public.products (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE public.products (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 2. Tabla de Pedidos
+-- 2. Orders Table
 CREATE TABLE public.orders (
   id TEXT PRIMARY KEY,
   order_number TEXT NOT NULL UNIQUE,
@@ -35,16 +35,16 @@ CREATE TABLE public.orders (
   shipping NUMERIC(10,2) DEFAULT 0,
   total NUMERIC(10,2) NOT NULL,
   payment_method TEXT NOT NULL,
-  status TEXT NOT NULL DEFAULT 'Pendiente',
+  status TEXT NOT NULL DEFAULT 'Pending',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Habilitar RLS
+-- Enable RLS
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
--- Políticas de lectura pública para catálogo y pedidos
+-- Public read policies for catalog and orders
 CREATE POLICY "Public read products" ON public.products FOR SELECT USING (true);
 CREATE POLICY "Public insert orders" ON public.orders FOR INSERT WITH CHECK (true);
 `;
@@ -52,13 +52,13 @@ CREATE POLICY "Public insert orders" ON public.orders FOR INSERT WITH CHECK (tru
 export const FIREBASE_FIRESTORE_RULES = `rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Catálogo de productos: lectura pública, escritura admin
+    // Product catalog: public read, authenticated admin write
     match /products/{productId} {
       allow read: if true;
       allow write: if request.auth != null;
     }
     
-    // Pedidos de clientes: creación libre, lectura/actualización autorizada
+    // Customer orders: public creation, authorized read/update
     match /orders/{orderId} {
       allow create: if true;
       allow read, update: if request.auth != null;
@@ -75,7 +75,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Para activar Supabase en dataService.ts:
+// To activate Supabase in dataService.ts:
 // export async function getProducts() {
 //   const { data } = await supabase.from('products').select('*');
 //   return data;

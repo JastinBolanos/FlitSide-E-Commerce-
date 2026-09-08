@@ -1,6 +1,6 @@
-export type ProductCategory = 'Camisetas' | 'Pantalones' | 'Chaquetas' | 'Calzado' | 'Accesorios';
+export type ProductCategory = 'T-Shirts' | 'Pants' | 'Jackets' | 'Footwear' | 'Accessories' | 'Camisetas' | 'Pantalones' | 'Chaquetas' | 'Calzado' | 'Accesorios';
 
-export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'Única';
+export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'One Size' | 'Única';
 
 export interface Product {
   id: string;

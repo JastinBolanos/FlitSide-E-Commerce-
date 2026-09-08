@@ -17,12 +17,12 @@ interface NavbarProps {
 }
 
 const CATEGORIES: { label: string; value: string }[] = [
-  { label: 'Todos', value: 'all' },
-  { label: 'Camisetas', value: 'Camisetas' },
-  { label: 'Pantalones', value: 'Pantalones' },
-  { label: 'Chaquetas', value: 'Chaquetas' },
-  { label: 'Calzado', value: 'Calzado' },
-  { label: 'Accesorios', value: 'Accesorios' },
+  { label: 'All', value: 'all' },
+  { label: 'T-Shirts', value: 'T-Shirts' },
+  { label: 'Pants', value: 'Pants' },
+  { label: 'Jackets', value: 'Jackets' },
+  { label: 'Footwear', value: 'Footwear' },
+  { label: 'Accessories', value: 'Accessories' },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -44,9 +44,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-colors">
       {/* Top Banner: minimalist notice */}
       <div className="bg-slate-950 text-slate-200 text-xs py-1.5 px-4 text-center font-medium tracking-wider flex items-center justify-center gap-2">
-        <span>ENVÍO GRATIS EN PEDIDOS SUPERIORES A 80€</span>
+        <span>FREE SHIPPING ON ORDERS OVER 80€</span>
         <span className="text-slate-500">•</span>
-        <span className="text-slate-400">CÓDIGO: <strong className="text-white">FLITSIDE10</strong> (-10%)</span>
+        <span className="text-slate-400">PROMO CODE: <strong className="text-white">FLITSIDE10</strong> (-10%)</span>
       </div>
 
       {/* Main Nav Bar */}
@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="btn-mobile-menu"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 -ml-2 text-slate-700 hover:text-slate-900 rounded-md"
-              aria-label="Abrir menú"
+              aria-label="Open menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onSelectCategory('all');
               }}
               className="text-left cursor-pointer flex items-center py-1 group"
-              aria-label="FlitSide Inicio"
+              aria-label="FlitSide Home"
             >
               <FlitsideLogo className="h-6 sm:h-7 w-auto text-[#2E2C3D] hover:opacity-90 transition-opacity" />
             </button>
@@ -82,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {currentView === 'admin' && (
               <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-300">
                 <Shield className="w-3.5 h-3.5 text-blue-600" />
-                Panel de Administración
+                Operations Dashboard
               </span>
             )}
           </div>
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <input
                   id="navbar-search-desktop"
                   type="text"
-                  placeholder="Buscar prendas, camisas, pantalones..."
+                  placeholder="Search garments, shirts, trousers..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
                   className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white text-slate-800 placeholder-slate-400 transition-all"
@@ -114,15 +114,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Optional Inicio / Bienvenida link */}
+            {/* Optional Home / Welcome link */}
             {onOpenWelcome && currentView === 'store' && (
               <button
                 id="btn-open-welcome"
                 onClick={onOpenWelcome}
                 className="hidden md:inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition-colors cursor-pointer"
-                title="Ir a Inicio"
+                title="Go to Home"
               >
-                Inicio
+                Home
               </button>
             )}
 
@@ -134,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-full text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <Store className="w-3.5 h-3.5" />
-                <span>Volver a la Tienda</span>
+                <span>Back to Store</span>
               </button>
             ) : (
               <>
@@ -143,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   id="btn-toggle-search-mobile"
                   onClick={() => setShowSearchInput(!showSearchInput)}
                   className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg cursor-pointer"
-                  aria-label="Buscar productos"
+                  aria-label="Search garments"
                 >
                   <Search className="w-5 h-5" />
                 </button>
@@ -153,10 +153,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                   id="btn-open-cart"
                   onClick={onOpenCart}
                   className="relative px-3 sm:px-4 py-2 bg-slate-100 rounded-full flex items-center gap-2 cursor-pointer hover:bg-slate-200 transition-colors text-slate-800"
-                  aria-label={`Carrito de compras, ${cartItemCount} artículos`}
+                  aria-label={`Shopping Bag, ${cartItemCount} items`}
                 >
                   <ShoppingBag className="w-4 h-4 text-slate-700" />
-                  <span className="hidden sm:inline text-xs font-semibold">Carrito</span>
+                  <span className="hidden sm:inline text-xs font-semibold">Bag</span>
                   {cartItemCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white font-bold shadow-xs">
                       {cartItemCount}
@@ -176,7 +176,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <input
                 id="navbar-search-mobile"
                 type="text"
-                placeholder="Buscar prenda, color o talla..."
+                placeholder="Search garment, color or size..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 autoFocus
@@ -223,7 +223,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="sm:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3 shadow-lg">
           {currentView === 'admin' ? (
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1">Administración</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1">Administration</span>
               <button
                 id="mobile-nav-return-store"
                 onClick={() => {
@@ -233,12 +233,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium bg-slate-900 text-white"
               >
                 <Store className="w-4 h-4" />
-                <span>Volver a la Tienda</span>
+                <span>Back to Store</span>
               </button>
             </div>
           ) : (
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-1">Colecciones</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-1">Collections</span>
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat.value;
                 return (
@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }}
                   className="flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors border-t border-slate-100 mt-1 pt-2"
                 >
-                  <span>Inicio</span>
+                  <span>Home</span>
                 </button>
               )}
             </div>

@@ -17,28 +17,28 @@ export class OrderDomainService {
     const errors: Record<string, string> = {};
 
     if (!customer.fullName.trim() || customer.fullName.trim().length < 3) {
-      errors.fullName = 'Introduce tu nombre y apellidos completos.';
+      errors.fullName = 'Please enter your complete full name.';
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!customer.email.trim() || !emailRegex.test(customer.email.trim())) {
-      errors.email = 'Introduce un correo electrónico válido.';
+      errors.email = 'Please enter a valid email address.';
     }
 
     if (!customer.phone.trim() || customer.phone.trim().length < 8) {
-      errors.phone = 'Introduce un número de teléfono de contacto válido.';
+      errors.phone = 'Please enter a valid contact phone number.';
     }
 
     if (!customer.address.trim() || customer.address.trim().length < 5) {
-      errors.address = 'Introduce la dirección completa para el envío.';
+      errors.address = 'Please enter complete shipping address.';
     }
 
     if (!customer.city.trim() || customer.city.trim().length < 2) {
-      errors.city = 'Introduce la ciudad o localidad.';
+      errors.city = 'Please enter your city or municipality.';
     }
 
     if (!customer.postalCode.trim() || customer.postalCode.trim().length < 3) {
-      errors.postalCode = 'Introduce un código postal válido.';
+      errors.postalCode = 'Please enter a valid postal code.';
     }
 
     return {
@@ -97,7 +97,7 @@ export class OrderDomainService {
       shipping,
       total,
       paymentMethod,
-      status: 'Pendiente',
+      status: 'Pending',
       createdAt: now,
       updatedAt: now,
     };

@@ -18,8 +18,28 @@ export class LocalStorageOrderRepository implements IOrderRepository {
       STORAGE_KEYS.LEGACY_ORDERS
     );
 
+    const STATUS_MAP: Record<string, OrderStatus> = {
+      Pendiente: 'Pending',
+      'En preparación': 'In Preparation',
+      Enviado: 'Shipped',
+      Entregado: 'Delivered',
+      Cancelado: 'Cancelled',
+    };
+
     if (!existing || existing.length === 0) {
       LocalStorageAdapter.setItem(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
+    } else {
+      let hasChanges = false;
+      const updated = existing.map((order) => {
+        if (STATUS_MAP[order.status]) {
+          hasChanges = true;
+          return { ...order, status: STATUS_MAP[order.status] };
+        }
+        return order;
+      });
+      if (hasChanges) {
+        LocalStorageAdapter.setItem(STORAGE_KEYS.ORDERS, updated);
+      }
     }
   }
 

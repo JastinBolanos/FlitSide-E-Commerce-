@@ -105,26 +105,26 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             <>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-[10px] uppercase tracking-widest text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                  Colección 2026
+                  Collection 2026
                 </span>
                 <span className="text-xs text-slate-400">•</span>
-                <span className="text-xs text-slate-500 font-medium">Novedades FlitSide</span>
+                <span className="text-xs text-slate-500 font-medium">FlitSide New Arrivals</span>
               </div>
               <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <span>Nuevas Llegadas 2026</span>
+                <span>New Arrivals 2026</span>
                 <Sparkles className="w-5 h-5 text-blue-600" />
               </h1>
               <p className="text-xs text-slate-500 mt-1">
-                Prendas contemporáneas de confección artesanal y tejidos nobles recién incorporadas a la temporada.
+                Contemporary garments with refined tailoring and premium fabrics introduced for the current season.
               </p>
             </>
           ) : (
             <>
               <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
-                {selectedCategory === 'all' ? 'Colección FlitSide' : selectedCategory}
+                {selectedCategory === 'all' ? 'FlitSide Collection' : selectedCategory}
               </p>
               <h1 className="text-2xl font-bold text-slate-900">
-                {selectedCategory === 'all' ? 'Catálogo FlitSide' : `Colección ${selectedCategory}`}
+                {selectedCategory === 'all' ? 'FlitSide Catalog' : `${selectedCategory} Collection`}
               </h1>
             </>
           )}
@@ -132,7 +132,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
         <div className="flex items-center gap-2">
           <span className="text-xs text-slate-500 font-medium mr-2">
-            {filteredProducts.length} {filteredProducts.length === 1 ? 'producto' : 'productos'}
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'garment' : 'garments'}
           </span>
 
           {/* Toggle Mobile Filter Button */}
@@ -142,7 +142,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             className="sm:hidden flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 text-slate-700 cursor-pointer"
           >
             <Filter className="w-3.5 h-3.5 text-blue-600" />
-            <span>Filtros</span>
+            <span>Filters</span>
           </button>
         </div>
       </div>
@@ -153,7 +153,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
             <span>
-              Filtrado por <strong>Nuevas Llegadas 2026</strong>. Explora las últimas tendencias en tejidos nobles.
+              Filtered by <strong>New Arrivals 2026</strong>. Exploring seasonal releases in natural textiles.
             </span>
           </div>
           <button
@@ -161,7 +161,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             onClick={onClearNewArrivals}
             className="inline-flex items-center gap-1 font-semibold text-blue-700 hover:text-blue-950 underline self-start sm:self-auto cursor-pointer"
           >
-            <span>Ver catálogo completo</span>
+            <span>View full catalog</span>
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -172,7 +172,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm text-xs">
           {/* Sizes chips */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-slate-500 font-medium">Talla:</span>
+            <span className="text-slate-500 font-medium">Size:</span>
             <button
               id="filter-size-all"
               onClick={() => setSelectedSize('all')}
@@ -182,7 +182,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                   : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 shadow-sm'
               }`}
             >
-              Todas
+              All
             </button>
             {SIZES.map((size) => (
               <button
@@ -205,10 +205,10 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 id="btn-filter-open-size-guide"
                 onClick={onOpenSizeGuide}
                 className="ml-1 flex items-center gap-1 px-2.5 py-1.5 text-xs text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
-                title="Consultar guía de tallas y cuidados"
+                title="View size & care guide"
               >
                 <Ruler className="w-3.5 h-3.5 text-blue-600" />
-                <span>Guía de Tallas</span>
+                <span>Size Guide</span>
               </button>
             )}
           </div>
@@ -224,7 +224,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 onChange={(e) => setInStockOnly(e.target.checked)}
                 className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5 cursor-pointer"
               />
-              <span>Solo disponibles</span>
+              <span>In stock only</span>
             </label>
 
             {/* Sort Dropdown */}
@@ -236,10 +236,10 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-white border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 text-xs font-medium focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm cursor-pointer"
               >
-                <option value="featured">Destacados</option>
-                <option value="price-asc">Precio: Menor a Mayor</option>
-                <option value="price-desc">Precio: Mayor a Menor</option>
-                <option value="name-asc">Nombre: A - Z</option>
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A - Z</option>
               </select>
             </div>
 
@@ -251,7 +251,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 className="text-slate-500 hover:text-slate-900 flex items-center gap-1 font-medium transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3 h-3" />
-                <span>Restablecer</span>
+                <span>Reset</span>
               </button>
             )}
           </div>
@@ -275,16 +275,16 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
           <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-4">
             <Filter className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-medium text-slate-900">No se encontraron prendas</h3>
+          <h3 className="text-base font-medium text-slate-900">No garments found</h3>
           <p className="text-xs text-slate-500 mt-1 mb-5">
-            No hay productos que coincidan con los criterios seleccionados. Prueba a cambiar los filtros o el término de búsqueda.
+            No products match your selected criteria. Try adjusting the filters or search terms.
           </p>
           <button
             id="btn-clear-empty-filters"
             onClick={handleResetAll}
             className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-colors cursor-pointer"
           >
-            Ver todo el catálogo
+            View full catalog
           </button>
         </div>
       )}

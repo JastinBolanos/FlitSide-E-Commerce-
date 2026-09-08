@@ -9,11 +9,11 @@ interface OrderDetailModalProps {
 }
 
 const STATUS_OPTIONS: { label: string; value: OrderStatus; color: string }[] = [
-  { label: 'Pendiente', value: 'Pendiente', color: 'bg-amber-100 text-amber-800 border-amber-300' },
-  { label: 'En preparación', value: 'En preparación', color: 'bg-blue-100 text-blue-800 border-blue-300' },
-  { label: 'Enviado', value: 'Enviado', color: 'bg-purple-100 text-purple-800 border-purple-300' },
-  { label: 'Entregado', value: 'Entregado', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
-  { label: 'Cancelado', value: 'Cancelado', color: 'bg-rose-100 text-rose-800 border-rose-300' },
+  { label: 'Pending', value: 'Pending', color: 'bg-amber-100 text-amber-800 border-amber-300' },
+  { label: 'In Preparation', value: 'In Preparation', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+  { label: 'Shipped', value: 'Shipped', color: 'bg-purple-100 text-purple-800 border-purple-300' },
+  { label: 'Delivered', value: 'Delivered', color: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
+  { label: 'Cancelled', value: 'Cancelled', color: 'bg-rose-100 text-rose-800 border-rose-300' },
 ];
 
 export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
@@ -23,7 +23,11 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 }) => {
   if (!order) return null;
 
-  const currentStatusObj = STATUS_OPTIONS.find((s) => s.value === order.status) || STATUS_OPTIONS[0];
+  const currentStatusObj = STATUS_OPTIONS.find((s) => s.value === order.status) || {
+    label: order.status,
+    value: order.status,
+    color: 'bg-slate-100 text-slate-800 border-slate-300'
+  };
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -34,18 +38,18 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <Package className="w-5 h-5 text-slate-800" />
             <div>
               <h2 className="text-base font-semibold text-slate-900">
-                Pedido {order.orderNumber}
+                Order {order.orderNumber}
               </h2>
               <span className="text-[11px] text-slate-400 font-mono">
-                Registrado el {new Date(order.createdAt).toLocaleString('es-ES')}
+                Placed on {new Date(order.createdAt).toLocaleString('en-US')}
               </span>
             </div>
           </div>
           <button
             id="btn-close-order-detail"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md"
-            aria-label="Cerrar detalle de pedido"
+            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-md cursor-pointer"
+            aria-label="Close order details"
           >
             <X className="w-5 h-5" />
           </button>
@@ -55,7 +59,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           {/* Status Bar */}
           <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span className="text-xs text-slate-500 font-medium block">Estado del pedido actual:</span>
+              <span className="text-xs text-slate-500 font-medium block">Current order status:</span>
               <span
                 className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-semibold border ${currentStatusObj.color}`}
               >
@@ -65,7 +69,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
             <div className="flex items-center gap-2">
               <label htmlFor="admin-change-status" className="text-xs text-slate-600 font-medium">
-                Cambiar estado:
+                Update status:
               </label>
               <select
                 id="admin-change-status"
@@ -86,7 +90,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white p-4 rounded-xl border border-slate-200">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-                Datos del Cliente
+                Customer Information
               </h3>
               <div className="space-y-2 text-xs">
                 <p className="font-semibold text-slate-900 text-sm">{order.customer.fullName}</p>
@@ -105,7 +109,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
             <div className="bg-white p-4 rounded-xl border border-slate-200">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-                Dirección de Envío
+                Shipping Address
               </h3>
               <div className="space-y-1.5 text-xs text-slate-700">
                 <div className="flex items-start gap-2">
@@ -117,7 +121,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 </div>
                 {order.customer.notes && (
                   <div className="mt-2 pt-2 border-t border-slate-100 text-[11px] text-slate-500 italic">
-                    Notas: "{order.customer.notes}"
+                    Notes: "{order.customer.notes}"
                   </div>
                 )}
               </div>
@@ -127,7 +131,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           {/* Purchased Items List */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              Prendas del Pedido ({order.items.length})
+              Order Items ({order.items.length})
             </h3>
             <div className="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100">
               {order.items.map((item, idx) => (
@@ -143,7 +147,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                       <h4 className="text-xs font-medium text-slate-900">{item.name}</h4>
                       <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-500">
                         <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-700">
-                          Talla: {item.selectedSize}
+                          Size: {item.selectedSize}
                         </span>
                         <span
                           className="w-2.5 h-2.5 rounded-full border border-slate-300"
@@ -159,7 +163,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                       {(item.price * item.quantity).toFixed(2)}€
                     </span>
                     <span className="text-[10px] text-slate-400 block font-mono">
-                      {item.price.toFixed(2)}€ / u.
+                      {item.price.toFixed(2)}€ / ea.
                     </span>
                   </div>
                 </div>
@@ -170,13 +174,13 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           {/* Payment & Totals Summary */}
           <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-2">
             <div className="flex justify-between text-slate-600">
-              <span>Método de Pago:</span>
+              <span>Payment Method:</span>
               <span className="font-medium text-slate-800 capitalize">
                 {order.paymentMethod === 'credit_card'
-                  ? 'Tarjeta Bancaria'
+                  ? 'Credit / Debit Card'
                   : order.paymentMethod === 'transfer'
-                  ? 'Transferencia Bancaria'
-                  : 'Pago Contra Entrega'}
+                  ? 'Bank Wire Transfer'
+                  : 'Cash on Delivery'}
               </span>
             </div>
             <div className="flex justify-between text-slate-600">
@@ -185,16 +189,16 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             </div>
             {order.discount > 0 && (
               <div className="flex justify-between text-emerald-700 font-medium">
-                <span>Descuento aplicado:</span>
+                <span>Discount applied:</span>
                 <span>-{order.discount.toFixed(2)}€</span>
               </div>
             )}
             <div className="flex justify-between text-slate-600">
-              <span>Costes de Envío:</span>
-              <span>{order.shipping === 0 ? 'Gratuito' : `${order.shipping.toFixed(2)}€`}</span>
+              <span>Shipping fee:</span>
+              <span>{order.shipping === 0 ? 'Free' : `${order.shipping.toFixed(2)}€`}</span>
             </div>
             <div className="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
-              <span>Total del Pedido:</span>
+              <span>Order Total:</span>
               <span>{order.total.toFixed(2)}€</span>
             </div>
           </div>
@@ -204,9 +208,9 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         <div className="px-6 py-3.5 border-t border-slate-200 bg-slate-50 flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold"
+            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold cursor-pointer"
           >
-            Cerrar
+            Close
           </button>
         </div>
       </div>

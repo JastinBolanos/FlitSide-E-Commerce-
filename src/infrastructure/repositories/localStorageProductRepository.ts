@@ -1,5 +1,5 @@
 import { IProductRepository } from '../../application/ports/productRepository';
-import { Product } from '../../domain/models';
+import { Product, ProductCategory } from '../../domain/models';
 import { STORAGE_KEYS } from '../../core/constants';
 import { INITIAL_PRODUCTS } from '../../data/mockData';
 import { LocalStorageAdapter } from '../storage/localStorageAdapter';
@@ -24,12 +24,42 @@ export class LocalStorageProductRepository implements IProductRepository {
       const initialMap = new Map(INITIAL_PRODUCTS.map((p) => [p.id, p]));
       let hasChanges = false;
 
-      // Update imageUrl for any initial product that has outdated or external unsplash URL
+      const CATEGORY_MAP: Record<string, ProductCategory> = {
+        Camisetas: 'T-Shirts',
+        Pantalones: 'Pants',
+        Chaquetas: 'Jackets',
+        Calzado: 'Footwear',
+        Accesorios: 'Accessories',
+      };
+
+      // Update and synchronize products with updated English catalog
       const updated = existing.map((p) => {
         const initial = initialMap.get(p.id);
-        if (initial && p.imageUrl !== initial.imageUrl) {
+        if (initial) {
+          if (
+            p.imageUrl !== initial.imageUrl ||
+            p.name !== initial.name ||
+            p.category !== initial.category ||
+            p.description !== initial.description ||
+            p.material !== initial.material
+          ) {
+            hasChanges = true;
+            return {
+              ...p,
+              name: initial.name,
+              category: initial.category,
+              description: initial.description,
+              material: initial.material,
+              sizes: initial.sizes,
+              imageUrl: initial.imageUrl,
+            };
+          }
+        } else if (CATEGORY_MAP[p.category]) {
           hasChanges = true;
-          return { ...p, imageUrl: initial.imageUrl };
+          return {
+            ...p,
+            category: CATEGORY_MAP[p.category],
+          };
         }
         return p;
       });

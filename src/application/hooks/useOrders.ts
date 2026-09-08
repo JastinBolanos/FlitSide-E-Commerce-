@@ -23,7 +23,11 @@ export function useOrders(): UseOrdersReturn {
 
   const pendingOrdersCount = useMemo(() => {
     return orders.filter(
-      (o) => o.status === 'Pendiente' || o.status === 'En preparación'
+      (o) =>
+        o.status === 'Pending' ||
+        o.status === 'In Preparation' ||
+        o.status === 'Pendiente' ||
+        o.status === 'En preparación'
     ).length;
   }, [orders]);
 
